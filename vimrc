@@ -16,12 +16,12 @@ Plugin 'preservim/nerdtree'
 " Monokai Colorscheme
 Plugin 'patstockwell/vim-monokai-tasty'
 
-
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 
+"" My Settings
 " Monokai Theme
 " colorscheme vim-monokai-tasty
 colorscheme monokai "by sickill/vim-monokai
@@ -42,3 +42,10 @@ inoremap (<cr> (<cr>)<c-o><s-o>
 map <F2> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 hi Normal guibg=NONE ctermbg=NONE
+
+" Let you use bash aliases
+let $BASH_ENV = "~./bash_aliases"
+
+" Mapping
+map <F3> :w<CR>:!sh make.sh<CR>
+
