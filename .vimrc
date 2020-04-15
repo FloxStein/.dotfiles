@@ -32,8 +32,8 @@ set number relativenumber
 set smartindent smarttab
 set shiftwidth=4
 set tabstop=4
-set softtabstop=0 noexpandtabj
-set expandtab
+set softtabstop=0 
+set noexpandtab
 
 inoremap {<cr> {<cr>}<c-o><s-o>
 inoremap [<cr> [<cr>]<c-o><s-o>
