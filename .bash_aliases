@@ -1,4 +1,5 @@
 alias vim='nvim'
+alias cdw='cd /mnt/c/User/Flori/Workspace'
 
 #strings
 cstring="#include <iostream>
