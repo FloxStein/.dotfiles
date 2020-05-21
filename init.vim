@@ -41,8 +41,11 @@ let g:airline#extensions#tabline#formatter = 'default'
 
 " My Settings
 
+set guicursor+=a:blinkon1
+set mouse=a
+
 " colorscheme vim-monokai-tasty
-" colorscheme gruvbox
+colorscheme gruvbox
 
 syntax on
 set number relativenumber
@@ -64,7 +67,7 @@ let mapleader = ","
 noremap <leader>w :w<CR>
 noremap <F1> :NERDTreeToggle<CR>
 
-noremap <leader>c :w<cr>:vsplit term://bash<cr>:startinsert<cr>timeout 1s cmatrix ; ./run<cr>
+noremap <leader>c :w<cr>:vsplit term://bash<cr>:startinsert<cr>timeout 1s cmatrix -u 1; ./run<cr>
 noremap <leader>p :w<cr>:!python main.py<cr>
 
 noremap <C-s> :source ~/.config/nvim/init.vim<cr>
