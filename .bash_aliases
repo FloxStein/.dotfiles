@@ -1,7 +1,16 @@
 alias vim='nvim'
-alias cdw='cd /mnt/c/User/Flori/Workspace'
+alias cdw='cd /mnt/c/Users/Flori/Workspace'
+alias py='python3'
+alias removetmp='cd .. && rm -r tmp'
 
 #strings
+pstring="def main():
+    print(\"Hello World\")
+
+if __name__ == \"__main__\":
+    main()
+"
+
 cstring="#include <iostream>
 
 int main() {
@@ -10,7 +19,7 @@ int main() {
 	return 0;
 }"
 
-compile="g++ main.cpp -o main"
+compile="g++ main.cpp -o main -std=c++2a"
 
 run="clear
 
@@ -19,7 +28,7 @@ echo -e \"\e[1;34mStart compiling.. \e[0m\"
 if ./compile; then
 	echo -e \"\e[1;32mFinished compiling.. \e[0m\"
 	echo -e \"\"
-	echo -e \"\e[1;34mShowing compiling.. \e[0m\"
+	echo -e \"\e[1;34mShow compiled.. \e[0m\"
 	echo -e \"\"
 	if test -e ./main; then
 		./main
@@ -45,12 +54,12 @@ mkwdir () {
 		echo "$run" >> run
 		chmod +x compile
 		chmod +x run
-		vim main.cpp
+		vim +5 main.cpp
 	elif [ "$2" = "python" ]; then
 		mkdir -p -- "$1" && cd -P -- "$1" && touch main.py
 		touch main.py
-		echo "print(\"Hello World\")" >> main.py
-		vim main.py
+		echo "$pstring" >> main.py
+		vim +2 main.py
 	fi
 }
 
