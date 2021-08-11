@@ -1,0 +1,17 @@
+#!/bin/sh
+tablet=$(xsetwacom --list devices)
+
+tablet=$(echo $tablet | grep -oP "stylus id: [0-9][0-9]")
+tablet=$(echo $tablet | grep -oP "[0-9][0-9]")
+
+monitors=$(xrandr --listactivemonitors)
+#read screen
+screen=$(zenity --entry --text "$monitors")
+
+if [[ ${screen} ]]
+	then 
+		xsetwacom --set "$tablet" MapToOutput HEAD-$screen;
+		echo Tablet set to HEAD-$screen;
+fi
+
+

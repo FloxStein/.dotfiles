@@ -1,0 +1,64 @@
+Config { 
+   -- appearance
+     font =         "xft:Font Awesome 5 Free Solid:style=Solid:size=9:anitalias=true, Hack Nerd Font:size=12:style=Bold:antialias=true"
+   , bgColor =      "#282828"
+   , fgColor =      "#d4be98"
+   , position =   Static { xpos = 0, ypos = 0, width = 1920, height = 24 }
+   --, position =  TopW C 70
+   -- , position =  Top
+   -- , border = BottomB
+   , borderColor =  "#646464"
+
+   -- layout
+   , sepChar =  "%"   -- delineator between plugin names and straight text
+   , alignSep = "}{"  -- separator between left-right alignment
+   , template = " %StdinReader% } %date% { %kbd% <action=pavucontrol>%default:Master%</action>"
+
+   -- general behavior
+   , lowerOnStart =     True    -- send to bottom of window stack on start
+   , hideOnStart =      False   -- start with window unmapped (hidden)
+   , allDesktops =      True    -- show on all desktops
+   , overrideRedirect = True    -- set the Override Redirect flag (Xlib)
+   , pickBroadest =     False   -- choose widest display (multi-monitor)
+   , persistent =       False    -- enable/disable hiding (True = disabled)
+
+   , commands = 
+
+        -- StdinReader
+        [ Run StdinReader
+
+        -- battery monitor
+        , Run Battery        [ "--template" , "Batt: <acstatus>"
+                             , "--Low"      , "10"        -- units: %
+                             , "--High"     , "80"        -- units: %
+                             , "--low"      , "darkred"
+                             , "--normal"   , "darkorange"
+                             , "--high"     , "darkgreen"
+
+                             , "--" -- battery specific options
+                                       -- discharging status
+                                       , "-o"	, "<left>% (<timeleft>)"
+                                       -- AC "on" status
+                                       , "-O"	, "<fc=#dAA520>Charging</fc>"
+                                       -- charged status
+                                       , "-i"	, "<fc=#006000>Charged</fc>"
+                             ] 50
+
+        -- time and date indicator 
+		, Run Date "%d.%m.%Y %T" "date" 50
+		-- , Run Date "<fc=#ABABAB>\xf017</fc> %a %d-%m(%b)-%Y (%T)" "date" 50
+
+        -- keyboard layout indicator
+        , Run Kbd            [ ("us(intl)" , "INTL")
+                             , ("us"         , "US")
+                             ]
+
+        , Run Volume "default" "Master"
+                                [ "-t", "<status>", "--"
+                                , "--on", "<fc=#859900><fn=1>\xf028</fn> <volume>%</fc>"
+                                , "--onc", "#859900"
+                                , "--off", "<fc=#dc322f><fn=1>\xf026</fn> MUTE</fc>"
+                                , "--offc", "#dc322f"
+                                ] 10
+        ]
+   }

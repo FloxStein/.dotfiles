@@ -1,0 +1,106 @@
+Config { 
+   -- appearance
+     font =         "xft:Font Awesome 5 Free Solid:style=Solid:size=9:anitalias=true, Hack Nerd Font:size=12:style=Bold:antialias=true"
+   , bgColor =      "#282828"
+   , fgColor =      "#d4be98"
+   , position = Top 
+   --, position =   Static { xpos = 1920, ypos = 0, width = 1920, height = 24 }
+   , border =       BottomB
+   , borderColor =  "#646464"
+
+   -- layout
+   , sepChar =  "%"   -- delineator between plugin names and straight text
+   , alignSep = "}{"  -- separator between left-right alignment
+   , template = " %StdinReader% } %date% {%multicpu% %coretemp% %memory% %dynnetwork% %battery% %kbd% <action=pavucontrol>%default:Master%</action>"
+
+   -- general behavior
+   , lowerOnStart =     True    -- send to bottom of window stack on start
+   , hideOnStart =      False   -- start with window unmapped (hidden)
+   , allDesktops =      True    -- show on all desktops
+   , overrideRedirect = True    -- set the Override Redirect flag (Xlib)
+   , pickBroadest =     False   -- choose widest display (multi-monitor)
+   , persistent =       True    -- enable/disable hiding (True = disabled)
+
+   , commands = 
+
+        -- StdinReader
+        [ Run StdinReader
+
+        -- network activity monitor (dynamic interface resolution)
+        , Run DynNetwork     [ "--template" , "龍 <dev>: <tx>kB/s|<rx>kB/s"
+                             , "--Low"      , "1000"       -- units: B/s
+                             , "--High"     , "5000"       -- units: B/s
+                             , "--low"      , "darkgreen"
+                             , "--normal"   , "darkorange"
+                             , "--high"     , "darkred"
+                             ] 30
+
+        -- cpu activity monitor
+        , Run MultiCpu       [ "--template" , " <total0>%|<total1>%"
+                             , "--Low"      , "50"         -- units: %
+                             , "--High"     , "85"         -- units: %
+                             , "--low"      , "darkgreen"
+                             , "--normal"   , "darkorange"
+                             , "--high"     , "darkred"
+                             ] 10
+
+        -- cpu core temperature monitor
+        , Run CoreTemp       [ "--template" , "   <core0>°C|<core1>°C"
+                             , "--Low"      , "70"        -- units: °C
+                             , "--High"     , "80"        -- units: °C
+                             , "--low"      , "darkgreen"
+                             , "--normal"   , "darkorange"
+                             , "--high"     , "darkred"
+                             ] 50
+                          
+        -- memory usage monitor
+        , Run Memory         [ "--template" ," <usedratio>%"
+                             , "--Low"      , "20"        -- units: %
+                             , "--High"     , "90"        -- units: %
+                             , "--low"      , "darkgreen"
+                             , "--normal"   , "darkorange"
+                             , "--high"     , "darkred"
+                             ] 10
+
+        -- battery monitor
+        , Run Battery
+                            [ "--template" , "<acstatus>"
+                                , "--Low"      , "10"        -- units: %
+                                , "--High"     , "80"        -- units: %
+                                , "--low"      , "#BF616A"
+                                , "--normal"   , "#EBCB8B"
+                                , "--high"     , "#A3BE8C"
+                                , "--" -- battery specific options
+                                        -- discharging status - use icons
+                                        , "-l"   ,  "#BF616A"
+                                        , "-m"   ,  "#EBCB8B"
+                                        , "-h"   ,  "#A3BE8C"
+                                        , "-o"   , ""
+                                        , "--lows"     , ": <left>% <timeleft>"
+                                        , "--mediums"  , ": <left>% <timeleft>"
+                                        , "--highs"    , ": <left>% <timeleft>"
+                                        -- AC "on" status
+                                        , "-O"  , ": <left>% <timeleft>"
+                                        -- charged status
+                                        , "-i"  , ""
+                                        , "-a", "notify-send -u critical 'Battery running out!!'"
+                                        , "-A", "20"
+                                ] 50
+
+        -- time and date indicator 
+		, Run Date "%d.%m.%Y %T" "date" 50
+
+        -- keyboard layout indicator
+        , Run Kbd            [ ("us(intl)" , "INTL")
+                             , ("us"         , "US")
+                             ]
+
+        , Run Volume "default" "Master"
+                                [ "-t", "<status>", "--"
+                                , "--on", "<fc=#859900><fn=1>\xf028</fn> <volume>%</fc>"
+                                , "--onc", "#859900"
+                                , "--off", "<fc=#dc322f><fn=1>\xf026</fn> MUTE</fc>"
+                                , "--offc", "#dc322f"
+                                ] 10
+        ]
+   }
