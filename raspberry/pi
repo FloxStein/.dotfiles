@@ -1,0 +1,1726 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.13 (Raspbian 13.13-0+deb11u1)
+-- Dumped by pg_dump version 13.13 (Raspbian 13.13-0+deb11u1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.auth_group (
+    id integer NOT NULL,
+    name character varying(150) NOT NULL
+);
+
+
+ALTER TABLE public.auth_group OWNER TO pi;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.auth_group_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_id_seq OWNER TO pi;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.auth_group_permissions (
+    id bigint NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_group_permissions OWNER TO pi;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.auth_group_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO pi;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.auth_permission OWNER TO pi;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.auth_permission_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_permission_id_seq OWNER TO pi;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
+
+
+--
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.auth_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    is_superuser boolean NOT NULL,
+    username character varying(150) NOT NULL,
+    first_name character varying(150) NOT NULL,
+    last_name character varying(150) NOT NULL,
+    email character varying(254) NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.auth_user OWNER TO pi;
+
+--
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.auth_user_groups (
+    id bigint NOT NULL,
+    user_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_user_groups OWNER TO pi;
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.auth_user_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_groups_id_seq OWNER TO pi;
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.auth_user_groups_id_seq OWNED BY public.auth_user_groups.id;
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.auth_user_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_id_seq OWNER TO pi;
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.auth_user_id_seq OWNED BY public.auth_user.id;
+
+
+--
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.auth_user_user_permissions (
+    id bigint NOT NULL,
+    user_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_user_user_permissions OWNER TO pi;
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.auth_user_user_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_user_permissions_id_seq OWNER TO pi;
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.auth_user_user_permissions_id_seq OWNED BY public.auth_user_user_permissions.id;
+
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE public.django_admin_log OWNER TO pi;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.django_admin_log_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_admin_log_id_seq OWNER TO pi;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.django_content_type OWNER TO pi;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.django_content_type_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_content_type_id_seq OWNER TO pi;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.django_migrations (
+    id bigint NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_migrations OWNER TO pi;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.django_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_migrations_id_seq OWNER TO pi;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_session OWNER TO pi;
+
+--
+-- Name: journal_day; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.journal_day (
+    id bigint NOT NULL,
+    date timestamp with time zone NOT NULL,
+    content text NOT NULL,
+    happiness integer NOT NULL
+);
+
+
+ALTER TABLE public.journal_day OWNER TO pi;
+
+--
+-- Name: journal_day_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.journal_day_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.journal_day_id_seq OWNER TO pi;
+
+--
+-- Name: journal_day_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.journal_day_id_seq OWNED BY public.journal_day.id;
+
+
+--
+-- Name: main_sonja; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.main_sonja (
+    id integer NOT NULL,
+    "time" timestamp with time zone
+);
+
+
+ALTER TABLE public.main_sonja OWNER TO pi;
+
+--
+-- Name: main_sonja_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.main_sonja_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.main_sonja_id_seq OWNER TO pi;
+
+--
+-- Name: main_sonja_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.main_sonja_id_seq OWNED BY public.main_sonja.id;
+
+
+--
+-- Name: uni_assignment; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.uni_assignment (
+    id bigint NOT NULL,
+    date date NOT NULL,
+    points integer,
+    total integer,
+    done boolean NOT NULL,
+    course_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.uni_assignment OWNER TO pi;
+
+--
+-- Name: uni_assignment_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.uni_assignment_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.uni_assignment_id_seq OWNER TO pi;
+
+--
+-- Name: uni_assignment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.uni_assignment_id_seq OWNED BY public.uni_assignment.id;
+
+
+--
+-- Name: uni_bookmark; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.uni_bookmark (
+    id bigint NOT NULL,
+    link_name character varying(256) NOT NULL,
+    link character varying(200) NOT NULL,
+    course_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.uni_bookmark OWNER TO pi;
+
+--
+-- Name: uni_bookmark_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.uni_bookmark_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.uni_bookmark_id_seq OWNER TO pi;
+
+--
+-- Name: uni_bookmark_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.uni_bookmark_id_seq OWNED BY public.uni_bookmark.id;
+
+
+--
+-- Name: uni_course; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.uni_course (
+    id bigint NOT NULL,
+    name character varying(256) NOT NULL,
+    beginning_date date,
+    end_date date,
+    semester_id bigint
+);
+
+
+ALTER TABLE public.uni_course OWNER TO pi;
+
+--
+-- Name: uni_course_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.uni_course_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.uni_course_id_seq OWNER TO pi;
+
+--
+-- Name: uni_course_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.uni_course_id_seq OWNED BY public.uni_course.id;
+
+
+--
+-- Name: uni_exam; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.uni_exam (
+    id bigint NOT NULL,
+    date date,
+    starttime time without time zone,
+    endtime time without time zone,
+    written boolean NOT NULL,
+    passed boolean,
+    grade double precision,
+    course_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.uni_exam OWNER TO pi;
+
+--
+-- Name: uni_exam_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.uni_exam_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.uni_exam_id_seq OWNER TO pi;
+
+--
+-- Name: uni_exam_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.uni_exam_id_seq OWNED BY public.uni_exam.id;
+
+
+--
+-- Name: uni_semester; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.uni_semester (
+    id bigint NOT NULL,
+    name character varying(256) NOT NULL,
+    beginning_date date,
+    end_date date
+);
+
+
+ALTER TABLE public.uni_semester OWNER TO pi;
+
+--
+-- Name: uni_semester_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.uni_semester_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.uni_semester_id_seq OWNER TO pi;
+
+--
+-- Name: uni_semester_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.uni_semester_id_seq OWNED BY public.uni_semester.id;
+
+
+--
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
+
+
+--
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
+
+
+--
+-- Name: auth_user id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_user ALTER COLUMN id SET DEFAULT nextval('public.auth_user_id_seq'::regclass);
+
+
+--
+-- Name: auth_user_groups id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_user_groups ALTER COLUMN id SET DEFAULT nextval('public.auth_user_groups_id_seq'::regclass);
+
+
+--
+-- Name: auth_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
+
+
+--
+-- Name: journal_day id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.journal_day ALTER COLUMN id SET DEFAULT nextval('public.journal_day_id_seq'::regclass);
+
+
+--
+-- Name: main_sonja id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.main_sonja ALTER COLUMN id SET DEFAULT nextval('public.main_sonja_id_seq'::regclass);
+
+
+--
+-- Name: uni_assignment id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.uni_assignment ALTER COLUMN id SET DEFAULT nextval('public.uni_assignment_id_seq'::regclass);
+
+
+--
+-- Name: uni_bookmark id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.uni_bookmark ALTER COLUMN id SET DEFAULT nextval('public.uni_bookmark_id_seq'::regclass);
+
+
+--
+-- Name: uni_course id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.uni_course ALTER COLUMN id SET DEFAULT nextval('public.uni_course_id_seq'::regclass);
+
+
+--
+-- Name: uni_exam id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.uni_exam ALTER COLUMN id SET DEFAULT nextval('public.uni_exam_id_seq'::regclass);
+
+
+--
+-- Name: uni_semester id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.uni_semester ALTER COLUMN id SET DEFAULT nextval('public.uni_semester_id_seq'::regclass);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.auth_group (id, name) FROM stdin;
+1	Journal
+\.
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can view log entry	1	view_logentry
+5	Can add permission	2	add_permission
+6	Can change permission	2	change_permission
+7	Can delete permission	2	delete_permission
+8	Can view permission	2	view_permission
+9	Can add group	3	add_group
+10	Can change group	3	change_group
+11	Can delete group	3	delete_group
+12	Can view group	3	view_group
+13	Can add user	4	add_user
+14	Can change user	4	change_user
+15	Can delete user	4	delete_user
+16	Can view user	4	view_user
+17	Can add content type	5	add_contenttype
+18	Can change content type	5	change_contenttype
+19	Can delete content type	5	delete_contenttype
+20	Can view content type	5	view_contenttype
+21	Can add session	6	add_session
+22	Can change session	6	change_session
+23	Can delete session	6	delete_session
+24	Can view session	6	view_session
+25	Can add day	7	add_day
+26	Can change day	7	change_day
+27	Can delete day	7	delete_day
+28	Can view day	7	view_day
+29	Can add bookmark	8	add_bookmark
+30	Can change bookmark	8	change_bookmark
+31	Can delete bookmark	8	delete_bookmark
+32	Can view bookmark	8	view_bookmark
+33	Can add semester	9	add_semester
+34	Can change semester	9	change_semester
+35	Can delete semester	9	delete_semester
+36	Can view semester	9	view_semester
+37	Can add exam	10	add_exam
+38	Can change exam	10	change_exam
+39	Can delete exam	10	delete_exam
+40	Can view exam	10	view_exam
+41	Can add course	11	add_course
+42	Can change course	11	change_course
+43	Can delete course	11	delete_course
+44	Can view course	11	view_course
+45	Can add assignment	12	add_assignment
+46	Can change assignment	12	change_assignment
+47	Can delete assignment	12	delete_assignment
+48	Can view assignment	12	view_assignment
+49	Can add cat	13	add_cat
+50	Can change cat	13	change_cat
+51	Can delete cat	13	delete_cat
+52	Can view cat	13	view_cat
+53	Can add ate	14	add_ate
+54	Can change ate	14	change_ate
+55	Can delete ate	14	delete_ate
+56	Can view ate	14	view_ate
+57	Can add sonja	15	add_sonja
+58	Can change sonja	15	change_sonja
+59	Can delete sonja	15	delete_sonja
+60	Can view sonja	15	view_sonja
+\.
+
+
+--
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+14	pbkdf2_sha256$320000$ZtnYnAKndY3yxrhaTnvwRN$efmQtOagwJ8f+fe18OdOyNKV1QPF/Zfgyt38JlhWfEk=	2023-12-02 16:05:59.384303+01	f	Test	Test			f	t	2023-11-30 14:16:12+01
+1	pbkdf2_sha256$320000$i1rJUF57OjIiJ6D7zOgZ35$DKMRjRZnN7RMroXIOGWy7zujtw7yhGLrw8DqtXLzfoM=	2023-12-09 11:57:52.724723+01	t	Flo	Florian	Gramsch	FloriGram@gmail.com	t	t	2022-06-04 20:22:34+02
+\.
+
+
+--
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
+1	1	1
+\.
+
+
+--
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+1	2022-08-24 16:48:06.444721+02	3	Test	3		4	1
+2	2023-11-02 12:49:27.991888+01	1	Journal	1	[{"added": {}}]	3	1
+3	2023-11-02 12:49:53.315095+01	1	flo	2	[{"changed": {"fields": ["First name", "Last name", "Groups"]}}]	4	1
+4	2023-11-30 12:42:00.273136+01	4	test	3		4	1
+5	2023-11-30 12:50:44.419615+01	5	test	3		4	1
+6	2023-11-30 12:53:19.788831+01	6	test	3		4	1
+7	2023-11-30 12:55:47.509674+01	7	test	3		4	1
+8	2023-11-30 12:57:34.017097+01	9	test	3		4	1
+9	2023-11-30 12:58:55.017108+01	10	test	3		4	1
+10	2023-11-30 12:59:38.827559+01	11	test	3		4	1
+11	2023-11-30 13:04:17.600329+01	12	test	3		4	1
+12	2023-11-30 14:14:09.685154+01	1	Flo	2	[{"changed": {"fields": ["Username"]}}]	4	1
+13	2023-11-30 14:15:57.504563+01	13	test	3		4	1
+14	2023-11-30 14:43:02.399729+01	14	Test	2	[{"changed": {"fields": ["First name"]}}]	4	1
+\.
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	permission
+3	auth	group
+4	auth	user
+5	contenttypes	contenttype
+6	sessions	session
+7	journal	day
+8	uni	bookmark
+9	uni	semester
+10	uni	exam
+11	uni	course
+12	uni	assignment
+13	feed	cat
+14	feed	ate
+15	main	sonja
+\.
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2022-06-04 15:41:07.560536+02
+2	auth	0001_initial	2022-06-04 15:41:07.771769+02
+3	admin	0001_initial	2022-06-04 15:41:07.8254+02
+4	admin	0002_logentry_remove_auto_add	2022-06-04 15:41:07.844752+02
+5	admin	0003_logentry_add_action_flag_choices	2022-06-04 15:41:07.864138+02
+6	contenttypes	0002_remove_content_type_name	2022-06-04 15:41:07.911753+02
+7	auth	0002_alter_permission_name_max_length	2022-06-04 15:41:07.932384+02
+8	auth	0003_alter_user_email_max_length	2022-06-04 15:41:07.952722+02
+9	auth	0004_alter_user_username_opts	2022-06-04 15:41:07.971586+02
+10	auth	0005_alter_user_last_login_null	2022-06-04 15:41:07.991717+02
+11	auth	0006_require_contenttypes_0002	2022-06-04 15:41:07.996783+02
+12	auth	0007_alter_validators_add_error_messages	2022-06-04 15:41:08.015839+02
+13	auth	0008_alter_user_username_max_length	2022-06-04 15:41:08.044805+02
+14	auth	0009_alter_user_last_name_max_length	2022-06-04 15:41:08.068445+02
+15	auth	0010_alter_group_name_max_length	2022-06-04 15:41:08.106561+02
+16	auth	0011_update_proxy_permissions	2022-06-04 15:41:08.133172+02
+17	auth	0012_alter_user_first_name_max_length	2022-06-04 15:41:08.161573+02
+18	sessions	0001_initial	2022-06-04 15:41:08.195701+02
+19	journal	0001_initial	2022-06-04 15:49:50.687079+02
+20	journal	0002_rename_data_day_date	2022-06-04 16:10:56.452151+02
+21	uni	0001_initial	2022-06-04 19:55:54.798939+02
+22	feed	0001_initial	2023-11-05 14:56:16.264881+01
+23	feed	0002_remove_ate_id_alter_ate_time	2023-11-05 17:03:23.701591+01
+24	feed	0002_ate_penis	2023-11-06 11:04:17.145685+01
+25	feed	0003_alter_ate_id	2023-11-06 11:18:33.518165+01
+26	main	0001_initial	2023-11-22 14:45:25.691078+01
+\.
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+f7u0rz702079vrvyexdkd71azunkq79c	.eJxVjEEOwiAQRe_C2hBgKC0u3fcMBGYYqRqalHZlvLtt0oVu33v_v0WI21rC1vISJhJXocXll6WIz1wPQY9Y77PEua7LlOSRyNM2Oc6UX7ez_TsosZV9jaQ7AGOUA8fQgU2ZBvRsLXOfmDlqDYRGge810pDII-04EVhnVRSfL-xSOL4:1nxYRF:9-dHrYtbq21o7mJRb5WLxLHsVdevng4k8wSv2opkuJM	2022-06-18 20:23:53.526513+02
+id3x82znyephz5ut4irr0twut73rgcfr	.eJxVjEEOwiAQRe_C2pDC0Dq4dN8zkGEGpGpoUtqV8e7apAvd_vfef6lA21rC1tISJlEXZZw6_Y6R-JHqTuRO9TZrnuu6TFHvij5o0-Ms6Xk93L-DQq18awBMEaMwsBHIKOzAS9fnmAaxKNaxABHZM3CPJJH94F1C25mMTKjeHzVLOSc:1r8iCg:V_E0vUnRgFbhsG-0RB4yIswdmgcx2UhrJ4cLfrndw_c	2023-12-14 15:39:46.494775+01
+mwn0gvpx1gn00lw7ew4j4uazi5bkh2gp	.eJxVjEEOwiAQRe_C2hBgKC0u3fcMBGYYqRqalHZlvLtt0oVu33v_v0WI21rC1vISJhJXocXll6WIz1wPQY9Y77PEua7LlOSRyNM2Oc6UX7ez_TsosZV9jaQ7AGOUA8fQgU2ZBvRsLXOfmDlqDYRGge810pDII-04EVhnVRSfL-xSOL4:1oQqbO:EHEcoIxXhv8vhgcGCevwA_7F6cys7HCQVvq02yiNCn8	2022-09-07 15:39:26.103895+02
+ptjoiavyi71hmvewmnlfx3e6efw83n6j	.eJxVjE0OwiAYBe_C2hAoRcCl-56BfD8gVQNJaVfGu2uTLnT7Zua9RIRtLXHraYkzi4vQ4vS7IdAj1R3wHeqtSWp1XWaUuyIP2uXUOD2vh_t3UKCXb53IZQ7W-JCGgGokIE-jQwUqERpnA6F1waAmP1jPZ_CECMwjhAxZi_cHBMU5KQ:1qyWLu:um_EnW3cxwEM1AF-WC5kZpUAl711XYvGXcLlVnXlbZ8	2023-11-16 12:59:10.899053+01
+9oflw9zh5aj5ikkrz1iy3vvqfif8pe95	.eJxVjEEOwiAQRe_C2hCgDAWX7j0DGWZAqoYmpV0Z765NutDtf-_9l4i4rTVuPS9xYnEWWpx-t4T0yG0HfMd2myXNbV2mJHdFHrTL68z5eTncv4OKvX7rYBMDAOHositICQbjMBgFqLhoCp6yVYa1x-C0yZo9sNFlpGCB3SDeH-ysN9M:1rBv1s:1R9IZ_Ao2bS_s04NBwMKIgSE0G92M0SsgfpHJpaSQeg	2023-12-23 11:57:52.731162+01
+0q6jzqd0fmmo1i4jl1zjrkya6gbtx6ah	.eJxVjE0OwiAYBe_C2hAoRcCl-56BfD8gVQNJaVfGu2uTLnT7Zua9RIRtLXHraYkzi4vQ4vS7IdAj1R3wHeqtSWp1XWaUuyIP2uXUOD2vh_t3UKCXb53IZQ7W-JCGgGokIE-jQwUqERpnA6F1waAmP1jPZ_CECMwjhAxZi_cHBMU5KQ:1qzeoR:45Q4q3uqO0rCfZl3AuCiKww-gHhrn3oiIBnRVUPnf_I	2023-11-19 16:13:19.179926+01
+6ahktjp2xc7anufbjslwi9m6j1xm45hv	.eJxVjE0OwiAYBe_C2hAoRcCl-56BfD8gVQNJaVfGu2uTLnT7Zua9RIRtLXHraYkzi4vQ4vS7IdAj1R3wHeqtSWp1XWaUuyIP2uXUOD2vh_t3UKCXb53IZQ7W-JCGgGokIE-jQwUqERpnA6F1waAmP1jPZ_CECMwjhAxZi_cHBMU5KQ:1qzetj:cmwcVv_wPKN0E-r9gzWCxUS7lr_ROoDhRrOZYnX5x2E	2023-11-19 16:18:47.99134+01
+y3mdjyi8467c2sfsgtt0d6smcb1vvt7i	.eJxVjEEOwiAQRe_C2pDC0Dq4dN8zkGEGpGpoUtqV8e7apAvd_vfef6lA21rC1tISJlEXZZw6_Y6R-JHqTuRO9TZrnuu6TFHvij5o0-Ms6Xk93L-DQq18awBMEaMwsBHIKOzAS9fnmAaxKNaxABHZM3CPJJH94F1C25mMTKjeHzVLOSc:1r8guY:ngp2O3Aa_KOR3dF21m2FwUw6qW6ILwpg4LHUzrCg4jk	2023-12-14 14:16:58.175483+01
+\.
+
+
+--
+-- Data for Name: journal_day; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.journal_day (id, date, content, happiness) FROM stdin;
+149	2021-11-02 16:12:28.974129+01	Irgendwas könnte hier stehen	4
+150	2021-11-03 19:59:13.229319+01	Hiermit erstelle ich meinen ersten Online Tagebucheintrag. Heute ist bisher noch nicht viel passiert und mir gehts auch dementsprechend relativ gut. Später werde ich vermutlich DSeA machen und bis dahin werde ich diese Seite weiter erstellen.	5
+151	2021-11-01 20:02:23.663215+01	Just the first day	5
+152	2021-11-04 20:12:34.644087+01	War heute bouldern und habe absolut keinen Spaß drin gesehen. Habe auch nichts hinbekommen, geschweige denn geschafft mit irgendjemanden zu reden. \r\nDas Leben saugt mir wieder alle Energie und ich weiß echt nicht was ich machen soll.\r\nMorgen treffe ich mich mit Lara und wir holen Halloween nach. Sie meinte dass sie wohl etwas vorbereitet hatte. Ich bin schon sehr gespannt was es sein wird, aber gleichzeitig fühle ich mich ein wenig schlecht, da ich nichts vorbereitet habe. Naja allgemein gehe ich da mit sehr gemischten Gefühlen ran..\r\nIch muss in letzter Zeit auch wieder an Jenifer denken, auch an Marit. Ich fühle mich einfach nur einsam und schaffe es nicht aus dieser Depression rauszukommen..\r\nHätte ich mich nochmal für den Boulderjob bewerben sollen? Ich weiß es nicht..	3
+153	2021-11-07 19:53:32.724172+01	War gerade bouldern (Es ist kurz vor 8) und es war ziemlich gut. War wie immer viel los und habe auch immernoch keinen angesprochen, jedoch fühle ich mich gerade trotzdem relativ wohl. Vor zwei Tagen der Abend (bzw die Nacht) war sehr schön mit Lara, wir sind uns freundschaftlich definitiv näher gekommen und das freut mich. Der nächste Tag jedoch war eher weniger erfreulich da die Einsamkeit mich wieder hart aufgefressen hat und ich bei der letzten Lucifer-Staffel nicht aufhören konnte zu heulen. Naja jetzt gehts mir zumindest besser. Mit Lara und Luca sieht es übrigens anscheinend wohl sehr gut aus, da bin ich auch mal sehr gespannt und drücke ihr wirklich die Daumen. Jedoch würde ich trotzdem gerne auch mal glücklich werden.	7
+154	2021-11-08 20:29:17.984019+01	Bin zwar relativ zufrieden aufgestanden, aber wurde im Laufe der Zeit schlechter. Gerade fühle ich wieder die Lustlosigkeit für alles und werde wahrscheinlich den Rest des Abends Gronkh schauen. Dass mich im Laufe des Tages niemand anschreibt macht mich halt dann schon irgendwie sehr unzufrieden.\r\nHabe zumindest die Books-App für die Homepage geschrieben und vielleicht schaue ich gleich nochmal ob ich meine früheren Tagebucheinträge digitalisiere.	4
+155	2018-04-13 00:00:00+02	Es ist halb Vier Mittags und ich mich endlich dazu entschlossen wiedereinmal ein Tagebuch zu starten. Schade eigentlich, dass ich das letzte nicht mehr habe, auch wenn es nicht gerade lang war. Naja es ging sowieso nur um perpertären Scheiß wie Vany Hein, Alicia Eller und Vanessa Chiarelli. Momentan bin ich endlich in einer Phase in der ich einen besseren Körper aufbauen will, auch wenn ich kleine Probleme damit habe Ernährungsumstellung und einen Workout Plan erstellen. Naja, das wird schon. Ich habe gerade entschieden das ich dieses Tagebuch mit einem Traumtagebuch verbinden werde, da ich schon lange luzides träumen erlernen wollte. (Handschmerz). Mir ging heute durch den Kopf wie erstaunlich Sex oder ein Kuss sich anfühlen muss im Traum, da ich beides noch nie hatte. Ich habe gestern endlich mal einen Ohrring in der öffentlichkeit getragen und zsm mit meinem neuen Outfit, welches ich letztenss zsm mit Chris gekauft habe, habe ich sogar zum ersten Mal ein Kompliment von Vany erhalten. Ich frage mich zur Zeit wirklich wie lange ich noch mit ihr befreundet sein werde... Eigentlich hoffe ich für immer. Josi fragt mich gerade wahrscheinlich wieder nach ner Disko.. Wieso hasse ich nur das tanzen. Weil ich zu viel denke. Ob meditieren wirklich hilft? Ich sollte wirklich anfangen, genauso wie mit dem Rückenschlafen. Auf dem Boden zu schlafen ist echt gut, aber ich bin halt ein Seitenschläfer.\r\n\r\nErste Traumerzählung: Ich lag bei Josi im Bett und sie war sich draußen umziehen und ich bin eingschalfen im Traum. Als ich in der Wirklichkeit aufgewacht bin dachte ich kurzzeitg wirklich, dass ich bei ihr geschlafen habe.	5
+156	2018-04-14 00:00:00+02	-Chris\r\n-Autohaus, Smart klauen (pink)\r\n-Difting etc\r\n-Verfolgungsjagt\r\n-Wolkenkratzer innen hohl\r\n-Flucht, durch fliegen etc\r\n-Auto ausleihen von Moritz -> Flucht\r\n-4 Soldaten aus allen richtungen\r\n-Auto war markiert\r\n-weitere Flucht\r\n-Zug\r\n-viele Tote\r\n-Aufgabe -> ging zur Kriegsbasis\r\n-Anführer nahm mich auf\r\n-Ich ging zur bösen Seite & werde zum Cyborg\r\n-wurde ausgelacht\r\n-Muss andere Flüchtlinge finden & eliminieren\r\n-Z.b. Ex-Freunin\r\n-Aufgewacht\r\n  -in Adler verwandeln?\r\n\r\nHeute habe ich mir endlich das Kindle Paperwhite geholt und freue mich schon darauf zu lesen. Außerdem habe ich zum ersten Mal einen Spinatsalat gegessen, sehr lecker. Die Süßkartoffelpommens hingehen nicht. Später werde ich zu Josi auf den Spielabend gehen. Freue mich schon.\r\nIch habe mir vorhin zum ersten Mal die Arme rasiert... sieht gut aus.\r\nHabe das Buch "Iss dich Fit" gelesen\r\n -> werde meine Ernährung streng anpassen (hoffentlich) (Anmerkung vom 28.2.19: so viel dazu lol	5
+157	2018-04-20 00:00:00+02	Gestern war ich seit ewigkeiten Mal wieder wandern, mit Chris, Simon & Daniel und es war echt ein super Tag Wünschte mir schon, dass das öfter passiert. Heute meine Mum mit dem Mini-Backofen überrascht.\r\nMorgen kaufe ich mir hoffentlich das MTB.	5
+158	2018-04-22 00:00:00+02	-Klassenzimmer\r\n-Französisch nach dem Abi\r\n-Vorne links Sitzplatz\r\n-Paul kam zu spät\r\n-Selina & Ich sollten irgendeinen Text schreiben	5
+159	2018-04-24 00:00:00+02	1)-Der erste Traum war kaum zu beschreibe.\r\n-Soetwas wie eine höhere Dimension mit höhren Lebewesen\r\n-Einer manifestierte sich in eine menschliche Version\r\n-Erklärte mir einiges\r\n-Fliegende Gaßförmige Wesen\r\n-Viele Bunte "Lichter"\r\n-Sie wollten mich zurückschicken, aber wollte nicht mehr weg\r\n-"höherer Wissensstand" (Anmerkung: wtf)\r\n\r\n2)-Zeitreise in die Vergangenheit\r\n-Vor 20 Jahren\r\n-Fuhr durch den Tunnel in der Nähe von Chris aus Richting Weinheim\r\n-1 Beifahrer\r\n-Baustelle kurz nach dem Tunnel auf der rechten Seite\r\n-Dialog: "Genau diese Baustelle war dort auch in der Gegenwart"	5
+160	2018-04-29 00:00:00+02	-Mit dem Fahrrad zu Oma\r\n-alte Wohnung\r\n-wollte irgendetwas/langeweile\r\n-Kenny entflohen\r\n-wieder eingefangen, aber er knurrte\r\n\r\nIch habe heute einen relativ starken Muskelkater und schmerzen am Po von der Fahrradtour gestern mit Chris & Simon. Sind von Biebelnheim nach Hahnheim (ca) & zurück. Ca 30km. Es war super. Haben uns auch dazu entschlossen mit Calesthanics anzufangen.\r\nMein Bday... war naja. Immerhin habe ich jz mein MTB. Chris & Ana haben mir was geschenkt & Simon will noch. Bin mal gespannt auf Vany... (Anmerkung: natürlich kam nichts)	5
+161	2018-04-30 00:00:00+02	-alte Wohnung\r\n-Mum ging an die Tür\r\n-Katze in der Wohnung\r\n  -diese suchte alles ab (wie ein Vacuumcleaner)\r\n-Ich wollte mir auf dem Klo die Zähne putzen -> verwirrung\r\n-ging ins Bad\r\n-es klingelt\r\n-Meine mum geht an die Tür\r\n-Ich schaue aus dem Bad\r\n-"Hexe" sagt monoton Zahlen auf\r\n-Mum stand wie festgefroren\r\n-Ich renne hin &  kann mich nicht mehr bewegen\r\n-Versuche dagegen anzukämpfen & wache auf\r\n\r\nIch muss sagen Michelle (Daniels Freundin) ist verdamt süß. Sie wäer nichts für mich, weil sie ne Stubenhockerin ist, trotzdem nerven mich die Gedanken...	5
+162	2018-05-05 00:00:00+02	-AnaChris wollte unser Auto parken\r\n-Hof\r\n-Ich will rückwärts einparken\r\n-Auto schwebt & fällt runter\r\n-Irgendwas angefahren -> ganz viel Müll\r\n-zweiter Versuch\r\n-Auto schwebt erneut & fällt -> sehr kaputt\r\n-Finde 5€, die anscheined schon lange da liegen\r\n\r\nIch bin heute mit Chris ein wenig Fahrrad gefahren & anschließend nach Flomborn zu Oma.	5
+163	2018-05-11 00:00:00+02	Am Anfang des Tages hatte ich eine ziemliche "Downphase", aber jetzt am Abend gehts mir deutlich besser. Habe heute seit ewigkeiten mal wieder den 2x2, 4x4, 7x7 & gerade eben sogar den 2x2 blind. Ich weiß, keine Leistung, aber besser als garnichts. Werde in nächster Zeit an meinem "Gedächtnis üben".\r\nGestern habe ich erste "ansatzweise" richtige whechies versucht. Leide ohne Erfolg.\r\nHabe gestern das zweite E-Book nach "Transport" fertig gelesen. Nach "2020 A.D. Neuland" kommt heute "2122 A.D. Helena". Werde hoffentlich morgen mal meine erste Fahrradtour, naja ne Stunde fahren oder so, allein machen.\r\nAußerdem habe ich heute das erste Objekt in meinem Gedächtnis-Palast platziert (2x2 Blind)	5
+164	2018-05-12 00:00:00+02	Ganz vergessen zu erwähnen, aber vorgestern habe mein erstes 4-Klebriges Kleeblatt auf dem großen Spielplatz in Albig gefunden.	5
+165	2018-05-14 00:00:00+02	-Mit dem Auto vn Alzey nach Albig\r\n-Dunkel\r\n-Kontrolle verloren & in einem Graben gefallen\r\n-Dieser war extrem tief\r\n-Anrufe von Magnus in Abwesenheit & Nachrichten, dass er sich Sorgen macht.\r\n-Hintereingang einer Taverne gefunden\r\n-wurde sehr komisch von komischen Gestalten angeschaut\r\n-Nettes Mädchen, welches später aufeinmal zu einer alten Dame wurde, half mir\r\n-Eine Erfindung wurde mir gezeigt\r\n-Ein luftbaloon in den man reinpustet & kurze Zeit darauf zu Helium "verwandelt" wurde.\r\n-Skepsis, aber dann sah ich etwas wie Adern auf dem Balon\r\n-Benutzte diesen & flog aus dem "Graben" herraus\r\n-landete in einem wunderschönen Garten, in dem meine Oma war\r\n-Ich stellt ihr die alte Dame vor & aufeinmal langweilte ich mir\r\n---\r\n-Ich reiste wohl in die Vergangenheit & erlebte eine Nacht wieder, in der ich sturz betrunken war\r\n-Erik war irgendwie dabei\r\n-Ich habe wohl irgendwie mit Ana rumgemacht & sie gefingert\r\n-Fand ein Bild von ihr mit gespreizten Beinen, auf dem sie entlöst war. (Sie hatte einen Busch)\r\n\r\nFiona & Ich sind heute mit dem Fahrrad nach Armsheim & zurück\r\nich habe heute die M2-Technick für 3BLD gelernt.\r\nIrgendwie wird jeden Tag meine Abneigung zu Vany größer.	5
+166	2018-05-15 00:00:00+02	Irgendwie ein komischer Moment gerade. Ich habe irgendwas davon geträumt, dass ich Eisbären retten muss, diese sich aber wehrten & ich sie deswegen "bekämpfen" musste. Gerade sehe ich Motivationsvideo & der Typ hat aus Spaß auf ein Blatt geschrieben: "Heute lernen wir man Eisbären bekämpft": -> Interessant\r\nFühle mich irgendwie schlecht, dass kein Geschenk für Chris habe...aber naja.\r\n\r\nSo, wenigstens habe ich heute mal meine erste kleine Fahrradtour, von 20km, allein gemacht & natürlich ist es ein super Gefühl.	5
+167	2018-05-20 00:00:00+02	Heute habe ich, zwei weitere 4-klebrige Kleeblätter gefunden & meine Schwester noch eins. Außerdem habe ich mein erstes erfolgreich laminiert.	5
+168	2018-05-25 00:00:00+02	Ich habe von Nina Schifferdecker geträumt. Ein super Mädchen, aber was solls.\r\nHeute das erste Mal (mehr oder minder) 40km mit dem Fahrrad gefahren. 20 mit Fiona & 20 allein.\r\nEs wäre super wenn ich zsm mit dem Studium bouldern bekommen.\r\nMeine "Kleinigkeit" über Amazon ist heute gekommen... WoW!\r\nJobangebot in der Boulderhalle gefunden. Das wäre auch klasse.	5
+169	2018-05-26 00:00:00+02	Nina!!! Verdammt\r\nIch habe heute das erste Mal den Dermaroller probiert. Doch unangehmer als ich dachte, aber es geht. Abder die Stunden danach bin ich am schwitzen & mir ist sau warm. Vllt kommt es aber vom Wetter. Glaube aber nicht. Naja bin gespannt auf Resultate.\r\nAußerdem bin heute 30km am Stück gefahren.	5
+170	2018-05-27 00:00:00+02	Eigentlich wollte ich heute mit den Jungs an den See, jedoch hatte ich keine Möglichkeit hinzukommen & es hat mich auch niemand gefahren... Komisches Gefühl. Außerdem habe ich nochmal realisiert wie sehr mir eigentlich Alicia & John am herzen lagen/liegen. Vllt schreibe ich John demnächst mal an.	5
+171	2018-05-29 00:00:00+02	-Offenbar wollte ich in irgendeine Art Festund eindringen\r\n-Alzey/Obermarkt\r\n-Als ich das geschafft habe, bin ich vor Leuten geflohen in Richtung Bank, jedoch aus Richtung Weinheim. (Diese Kurve mit der Einbahnstraße\r\n-Ich bin zu einem tisch auf der Terasse eines Restaurants\r\n-Dort saß Selina zsm mit ihrer Mum & irgendeinem Freund -> Eifersucht\r\n-Auf dem ganzen Weg bin ich hoch gesprungen/geflogen\r\n--\r\n-Mum hat zisch Kuchen gebacken, jedoch habe ich mich Aufgeregt, dass es keine Erdbeerrolle gibt -> Offensichtlich wegen Gestern (Mum hat einen Tortenboden gebacken)	5
+172	2018-06-06 00:00:00+02	Heute, gegen 4 Uhr Morgens ist Isabelle geboren. Ich war zwar nicht dabei, aber werde sie gleich sehen. Jz, wie ich das mitbekomme kann ich es eigentlich garnicht abwarten selbst Kinder zu bekommen. Bin natürlich auch gespannt mit wem. Wer weiß, vllt weiß ich es schon in wenigen Monaten, beim Physikstudium. Bewerbung ist übrigens schon raus.\r\n.\r\n.\r\n.\r\nSpät am Abend. Ich habe mittlerweile Isabelle gesehen & bin schon sehr gespannt auf ihre Entwicklung. Außerdem hoffe ich , dass sie einen gescheiten Vater bekommt bzw Steffi jmd gescheites.\r\nIch kann nur betonen wie sehr ich mittlerweile jmd will & mit ihr über ein Leben reden kann.	5
+173	2018-06-10 00:00:00+02	Seit heute, bzw seit 15min oder so, weiß ich dass es auch mehrblättrige Kleeblätter gibt & will dementsprechend natürlich welche finden *freu*. Außerdem denke ich, dass ich min. zwei kleine Tattoos will: Kompass & Kleeblatt, vllt irgendwann auch irgendeine Gleichung, mal sehen.\r\nHabe mit Anna ausgemacht, am Mittwoch Fahrrad zu fahren & zu picknicken... Bin mal gespannt & freue mich.	5
+174	2018-06-11 00:00:00+02	Ich habe gerad das erste Mal den Rubiks Cube blind gelöst, bis auf einen kleinen Fehler. Die Ecke A & P waren in sich verdreht\r\n\r\nL2 B2 U' B2 U' R2 F2 R2 F2 B' L D' U2 B D' U B2 U Fw Uw'\r\n<ul>V</ul>acuum<ul>C</ul>leaner, <ul>S</ul>ou<ul>L</ul>, <ul>RP</ul>, <ul>GA</ul>bel, (James)<ul>B</ul>on<ul>d</ul>, <ul>T</ul>ee\r\n<ul>W</ul>ol<ul>f</ul>, <ul>PH</ul>-Streifen, <ul>M</ul>au<ul>l</ul>, <ul>B</ul>\r\nZeit 11:18.91 mit kleiner Hilfe, sprich mit einer Kreuzwortseite nach ein paar Wörtern geschaut\r\n--\r\nHabe mir jz mit Chris Escapinis 2 (oder so) gekauft. Macht sau spaß!!!	5
+175	2018-07-27 00:00:00+02	Am 25.07.18 war ich mit Josi am See & das erste Mal hat mir jmd gesagt, dass ich echt gute Chancen hätte. Sie sagt, wenn ich wollte könnte ich jede haben... Ich bin überglücklich mit dieser Aussage.\r\nGestern war Vany's Bday... War nicht eingeladen & weiß auch nicht recht was ich von der ganzen Sache halten soll.\r\n\r\nAn dem Tag vor dem See habe ich seit langem mal wieder viel getrunken. War echt schön mit Alex & Simon. Habe aber währendessen Anna angeschrieben. Weiß aber nicht, ob ich mich mit ihr treffen will.\r\n\r\nUnd nächste Woche treffe ich mich mit der frisch getrennten Vani Christ. Bin mal gespannt\r\n\r\nUnd vorgestern kam die Bestätigung für die Uni.	5
+176	2018-08-06 00:00:00+02	-Hatte mal einen Klartraum\r\n-Auslößer, Stefan war an 2 Stellen gleichzeitig\r\n-Waren in einer Führung in einer Art Burg\r\n-bin dann mit meiner "großen Liebe" weggeschlichen\r\n-Der Traum wurde dann kurz undeutlich\r\n-Habe, dann aber verkackt, aufgrund von zu hoher Aufregung...(Kurz vor BJ)\r\n\r\nHabe gestern das erste Mal eine Sternschnuppe gesehen, und drei weitere. 22:46 Uhr\r\n\r\nAußerdem habe ich vorgestern endlich mal Vany angeschrieben. Wir schreiben als wär alles normal. Will mich aufjeden Fall mit ihr demnächst treffen.	5
+267	2022-05-12 13:17:43.221562+02	Okay, das hatte nicht so gut funktioniert wie erwartet. Jedoch hatte ich mehr oder weniger erfolgreiche Konversisationen in vrchat. Habe sogar zwei "Freunde" gemacht.\r\nHeute habe ich mich auf 3 erp servern registriert.. mal schauen wie das wird.	5
+177	2018-08-24 00:00:00+02	Es ist zwar Fünf Uhr Morgens, aber ich muss es jz schnell aufschreiben. Ich komme gerade von Josis Bday & dort haben wir dieses Trinktischspiel gespielt\r\nMit Küssen!\r\nUnd ich habe Josi geküsst. Klar nur ein kurzer...aber mit Josi & viel wichtiger...\r\nDas war mein Erster!!!\r\nEs war ein wundersames Gefühl, diese Lippen Jetzt will ich mehr...	10
+178	2018-09-08 00:00:00+02	Ein scheiß Gefühl irgendwie niemanden zu haben. Zumindest niemand festes mit dem man alles machen kann. Könnte heute auf die Kerb & bei Vani schlafen. Aber zu welchem Preis? Langeweile. Und das suckt..Vany bei Sandro etc, Vani bei Fußballerinnen, Josi kommt vllt erst ab 12. Chris nicht da.\r\nDie Einzigen mit denen ich Spaß hätte. Ich hätte gestern mit Josi gehen sollen, aber ich weiß so oft einfach nicht was tun soll. Gefühlt mache ich fast immer das Falsche von den zwei optionen. Sollte ich vllt doch hingeheh? Aber dann fühle ich mich wahrscheinlich fehl am Platz. Der einzige Grund wieso ich gehen sollte, wäre wenn Vani  mich drum bittet. Wohl kaum...\r\nIch fahre wohl doch. LOL	5
+179	2018-09-09 00:00:00+02	14:27 Uhr\r\nIch bin eben von Vani aus heimgekommen & bin froh auf die Kerb gegangen zu sein. War sehr schön & nicht zuhause zu schlafen ist auch immer mal schön. Vorallem nach solchen Abenden. Nicht allein zu sein ist herrlich.	7
+180	2018-09-19 00:00:00+02	Nachdem ich einen Traum hatte, in dem ich beim Friseur war, habe ich es jetzt endlich durchgezogen & mir ne Glatze gemacht!\r\nKomisches Gefühl & dabei fängt die Uni bald an LOL.\r\nNaja, bin froh es endlich gemacht zu haben.	7
+181	2018-09-27 00:00:00+02	Es sind schon ein paar Tage des Brückenkurs vergangen & ich bin schon sehr gespannt wie es weiter gehen wird. Mathe ist schon schwer, aber ich bin guter Dinge.\r\nVorallem werde ich mir jetzt wahrscheinlich ein Ipad Pro kaufen & bin schon mega hyped darauf. Die Rabattvariante ist mir zwar unter der Nase verschwunden aber was solls. Ist halt ein wenig ärgerlich.\r\n\r\nAußerdem habe ich eine Uli kennengelernt & ich finde sie echt nett...\r\nUnd natürlich habe ich auch relativ viele Freunde gewonnen.	5
+182	2018-10-07 00:00:00+02	-Ich habe in nem Traum Josi einfach meinem Penis gezeigt. WTF\r\n\r\nSo, erste Eintrag in mein Digitales Tagebuch. Ersten Zwei Wochen Uni überlebt & gestern mit Vani & dann Josi getroffen. Josi hat jz offizielle einen Freund. Flo halt, aber ich freue mich für sie.\r\nHabe auch erfahren, dass Simon von seinem Vater geschlagen wird...Was soll ich davon nur halten.\r\nAußerdem hat Vani wärend ihrer Beziehung mit zwei Typen auf Malle rumgemacht. Weiß ich auch nicht sorecht was ich davon halten soll.	5
+183	2018-11-02 00:00:00+01	Am Morgen nach Halloween habe ich bei Hardi ein Mädchen kennengelernt & ihr heute eine Nachricht hinterlassen. Sie hat eben geantwortet und was davon erzählt, dass sie gerade für ihr Staatsexamen lernt & somit keine Zeit für soziale Kontakte hat. Maaaaaan, es hätte so einfach sein können & es wäre wohl auch zu schön gewesen...aber was soll man machen? Auch wenn ich mich von "Schicksal" leicht verarscht fühle.\r\n\r\nAber wenigstens befreunde ich mit Hardi & Piet immer besser.\r\n\r\nHabe außerdem Selina im Zug gesehen & sie hat mir ein Kompliment über meine Statur gemacht.\r\nSie ist ja schon süß...aber ich weiß ja nicht.	5
+184	2018-11-24 00:00:00+01	NoNut!!! Ab Heute!!!\r\n\r\nMindestens 1 Monat. Also bis zum 24.12.2018!	5
+185	2018-12-11 00:00:00+01	Jaja, natürlich nicht geschafft. Ich habe es jz aber nochmal vor. Weiß nicht wie lange genau ich es mache, aber nicht sehr lange. Trotzdem ist es schon verdammt schwer lol. Naja, dieses Jahr noch will ich es schaffen. Wie auch immer, wieso ich eigentlich schreibe ist Vani. Ich habe es nämlich endlich geschafft Vani zu fragen wegen der Sauna. Sie hat mich ein wenig geärgert, aber wohl ja gesagt!! Phew, ich bin echt gespannt auf diesen Tag...	7
+186	2018-12-14 00:00:00+01	...	2
+187	2019-01-04 00:00:00+01	Ich sage lieber nichts über die älteren Einträge. Mir geht's wirklich nicht so gut. Einsam, aber nicht allein...Ich bin niemandes Nr.1. Das macht mir schon sehr zu schaffen. Habe mich heute mit Vany getroffen. Wieso kann ich gegenüber nicht so sein wie früher...\r\n\r\nAchja, zum 11.12.2018: Vani hat wohl doch mich verarscht. Naja, sie sagte, mal schauen. Bisher kam natürlich nichts.\r\n\r\nIch kann mir bis heute auch immer noch nicht erklären, wieso ich bei vielen Animes so emotional werde. Wann hat das angefangen & wieso. Trotzdem habe ich das Gefühl, das es mir dann ein wenig besser geht, trotz dem ganzen geheule & der laufenden Nase *schniefe, gerade jetzt*\r\nNaja. Dann schaue ich mal SAO Ordinal Scale zuende & schaue gleich SAO Season 3.\r\nAuch wenn ich die nächsten zwei Tage relativ viel Physik machen sollte...\r\nAchja, meie Schwesterhat vorhing vorgeschlagen ein Auslandssemester zu machen. Ich weiß nicht ob das nur spaß von ihr war, aber reizbar ist es schon irgendwie. Wobei das lieber allein machen wollen würde...	5
+188	2019-01-15 00:00:00+01	Heute habe ich mich endlich dazu durchgedrungen einen TV zu kaufen. Bin mal gespannt.\r\nAußerdem habe ich mein Zimmer umgestellt & sieht echt gut aus.	5
+189	2019-01-18 00:00:00+01	Ganz vergessen, die Nacht zu gestern. Da habe ich etwas komisches geträumt/erlebt. Ich lag im Bett & es kam mir vor als von links aus nach mir greifen, oder umhüllen. Es hat sich nach dunkelheit oder so angefühlt. Aber das merkwürdigste war, dass ich mich in dem Moment nicht bewegt habe & es auch nicht wollte. Außerdem dachte ich in dem Moment einfach, dass das sowieso öfter passiert & das garnichts dabei wäre.. Da bin ich mir eigentlich nicht so sicher...	5
+190	2019-02-16 00:00:00+01	-Ich habe diese Nacht von Kyra geträumt. Wir hatten wohl Ferien & habe wohl irgendwo Urlaub gemacht, zsm mit Hardi & noch nem Kerl. Kyra & ich sind zsm gekommen & es hat sich gut angefühlt. Ich weiß nicht einmal wieso. Klar ist sie hübsch, aber das wars auch schon. Ich könnte mir nie vorstellen mit ihr zsm zu sein, & trotzdem hoffe ich es ein wenig.\r\n\r\nIch glaube langsam verzweifle ich einfach.	5
+191	2019-02-28 00:00:00+01	Ich habe heute mal einen "Fastentag" gemacht, also kein TV, Laptop, Süßkram etc. Hhabe heute nur gelernt, Schach, Soduko & programmiert. Nur nen Apfel & ein paar kleine Hähnchenkeulen gegessen. Habe die Idee von Improvement Pill & bin mal gespannt auf Morgen. Bin jedenfalls hundemüde (halb 10)\r\nWeiß nicht ganz was ich davon halten soll. Den ganzen Tag nur produktiv sein, ist echt nicht meins & mir gehts auch nicht so gut. Vllt liegt das aber an Vani, sie hat jz nen Freund. Gehe deswegen wahrscheinlich auch nicht auf ihren Bday. Kenne nur Vany(i) & Evelin. Alle haben sie jmd. Das ist wirklich nichts für micht...\r\nMöchte jz aber wieder mit Kampfsport anfangen, weiß nur noch nicht ob TWD oder was anderes.\r\nIch würde wahnsinnig gerne Body-to-Body-Massage machen, bin mir aber noch ein wenig unsicher. Wenn dann mit Happy-End & habe Angst dass ich mich danach furchbar fühle....\r\nUnd will mir ein Tattoo stechen lassen. Habe sogar drei Ideen (Stargate, Supernatural & "Am I Dreaming?". Vany will dann unbedingt mit. Weiß nicht ganz was ich davon halten soll.\r\n\r\nWill jz eigentlich öfter Tagebuch schreiben. Mal schauen\r\n\r\nMeine Mum macht mir soviele Komplimente...Ich hasses es. Wenn sie wenigstens nicht die Einzige wäre.	5
+192	2019-03-01 00:00:00+01	-Profi Footballspieler\r\n-Zeitkontrolle	5
+193	2019-03-03 00:00:00+01	So viel dazu lol.\r\nHabe heute den ganzen Tag mit Serie schauen verschwendet (Stargate)\r\nSollte eigentlich für MfP lernen. Ich denke aber, dass ich es trotzdem schaffe. Wenigsten kann ich jz relativ lange (10s) den Kopfstand halten.\r\nIch fühle mich furchtbar wegen Vani, aber glaube nicht, dass ich das morgen schaffe...Srry Vani!\r\nWürde gerne nach der MfP-Klausur bald mal nach Frankfurt oder so, zwei Nächte schlafen & vllt die Body-to-Body Massage machen.	5
+194	2019-03-13 00:00:00+01	10:12 Uhr\r\nIch werde es tun, ich gehe jz los & nehme all meinen Mut zsm!\r\n\r\n17:07 Uhr\r\nIch habs getan! Ich bin keine Jungfrau mehr & es fühlt sich gut an.\r\nJedoch muss ich sagen, dass meine erste Dame (wunderschön, 25, groß, blond, wunderbarer Arsch, Brüste waren irgendwie komisch, Rumänisch & hieß glaube Bianca, bin mir aber nicht mehr sicher lol ^^' (war wahrscheinlich sowieso nicht ihr echter Name)) ein wenig stumpf war. Leider keine Zungenküsse, jedoch war der Rest ganz schön. Aber kam mir ein wenig vor, als würde sie mich abfertigen. Naja, Erfahrung gemacht & bin überglücklich!\r\n\r\nAußerdem habe ich mir heute den Termin fürs Tattoo machen lassen. (28.3.)	10
+195	2019-04-30 00:00:00+02	Liege jz im Bett & werde meine letzte Nacht hier genießen. Morgen ziehe ich aus. Habe Angst. Was ist, wenn ich mich da nicht wohl fühle, es streit gibt o.a. Muss morgen eigentlich auch noch zwei AB bearbeiten...bin so enttäuscht von mir. Nichts bekomme ich hin. Ich wünschte einfach, ich müsste nichts mehr mache...Ich fühle mich oft, als würde ich nicht fürs Leben gemacht sein. Vany macht mir auch irgendwie zu schaffen...\r\n\r\nZeilen frei lassen\r\nsieht hässlich aus.\r\n(In der geschrieben Variante schreibe ich normalerweise in jeder Zeile)	5
+196	2019-05-01 00:00:00+02	Erste Nacht in der neuen Wohnung. Bin richtig fertig & müde. Mehr morgen LOL	5
+197	2019-05-05 00:00:00+02	So...es sind nun schon ein paar Tage vergangen, aber jz geht es mir besser. Nach der zweiten Nacht sind nämlich meine Augen angeschwollen & wir mussten die Couch rausbringen. Heute schlafe ich wieder in der neuen Wohnung & hoffe, dass ich nicht allergisch reagiere. Bin gerade auch allein hier, komisches Gefühl. Bin echt gespannt wie mein Zimmer, trotz der kleine Größe, wird.\r\nAber jz wird erstmal Ark offline gezockt.	5
+198	2019-06-05 00:00:00+02	Traurig, Verlassen, Angst...so fühle ich mich gerade.\r\nAn sich ist es angenehm ausgezogen zu sein, aber ich vermisse die anderen schon sehr...Hardi & Stefan sind zwar nett, aber zu 100% fühle ich mich nicht wohl...einsam. Das Internet ist irgendwie scheiße, hoffe es klappt mit einem Repeater. Chris interessiert sich nicht für meine Gefühle & mit Josi kann ich über so Sachen nicht reden. Und Vany, sie ist weg. Zimmergröße ist zwar oke, aber das Licht...\r\nMorgen schreibe Ex2. Hoffe, dass ich es schaffe.\r\nDas Let's Play Draugen von Gronkh ist mega spannend & schön, freue mich jeden Tag auf ne Folge. Schaue jz Life is Strange: Before the storm.\r\nTkD ist sehr gut, auch wenn es meine Füße killt. Bin froh, dass ich mich dazu durchgerafft habe. Chris & ich, und vllt Sascha oder so wollen eine Lost Places Tour machen, hoffe dass wir das machen.\r\n\r\nIch brauche Nähe...Will wenigsten ne Massage...(mit Happy end?), oder direkt Sex... Fühle mich mies deswegen, aber was soll ich denn machen. Bin so erbärmlich.	5
+199	2019-08-20 00:00:00+02	Ganz schön lange her, der letzte Eintrag. Will jetzt eigentlich auch nicht viel schreiben. Möchte nur wieder mehr Struktur in mein Leben bringen. Also werde ich...naha vllt mehr/öfter schreiben. Gerade gehts mir eigentlich ganz oke. Zwar musst ich die Fahrradtour direkt wieder abbrechen, aber was solls. War halt ziehmlich krank.\r\nWerde jetzt öfter bouldern!	5
+200	2019-08-28 00:00:00+02	Nun, soviel dazu. Wobei, das letzte Mal habe ich vor einer Woche~ geschrieben, also wieso beschweren. Jedoch ist es nicht immer einfach an Sachen dran zu bleiben. Mein Wille ist irgendwie schwach. Gebrochen vielleicht? Nein, das glaube ich nicht,. Ich vermute, dass es an all den Serien liegt. Die lassen einen verdummen, aber es ist auch schwer sich davon loszureißen. Ich versuche es Schritt für Schritt abzuschaffen. Das wird ein langer Weg, aber ich bin zuversichtlich.\r\n\r\nEx2 habe ich zwar nicht geschafft, aber das ist nicht schlimm. \r\nEs wird alles besser.	5
+201	2019-09-10 00:00:00+02	Für den Rest des Monats werde ich jeden Tag in dieses Buch schreiben. Well, that's the plan.\r\nIch brachte heute weider Ordnung auf meinen Schreibtisch & fühle mich jz ziemlich wohl. Ich hatte das Gefühl endlich was Produktives gemacht zu haben... und das ist auch Sinn dieses Journals. Ich habe biser nur Tagebuch geführt und verstehe auch noch nicht ganz den Unterschied, jedoch hoffe ich, dass dieser mir noch Erschließt. Hoffentlich verbessert sich dann auch mal mein Schreibstil.\r\nPläne für die Zukunft sind Ordnung in mein Leben bringen und das Physikstudium schaffen. Danach weiß ich noch nicht wirklich weiter. Darüber sollte ich mir die Tage gedanken machen.\r\nBekomme einen Krampf in der Hand.\r\nAchja. Dates. Dades? Ersteres Lol? Soll wichtig sein.	5
+202	2019-09-11 00:00:00+02	War heute 5h bei Robin. Ich mag ihn wirklich, aber alles passen tuts nicht. Schwer zu erklären. Die meiste Zeit haben wir gelacht & es wr ganz lustig, jedoch gab es auch Momente des Unbehagens. Naja, vllt bin ich auch nur schüchtern. Bin gerade relativ müde, lliegt warhscheinlich an den "nur" 8h Schlaf. Wobei ich wahrscheinlich garnicht so lange geschlafen habe. Ich versuche nämlich auf dem Rücken zu schlafen. Und da brauche ich eine Gewissen Zeit zum Einschlafen. Bin gerade allein in der Wohnung & fühle mich deswegen fantastisch & frei.	5
+203	2019-09-12 00:00:00+02	Heute bin ich den ganzen Tag allein in der Wohnung. Es fühlt sich echt befreiend an. Überlege ob ich später ins TkD gehe, aber glaube, dass ich heute mal llieber das Alleinsein genieße. Brauche noch ein Geschenk für Chris, aber habe keinen blassen Schimmer. Morgen muss ich wohl was finden.\r\nMir gefällt es hierrein zu schreib. Soviel besser als aufn IPad. Chris hatte mich zu so nem "Vortrag übers" Leute kennenlernen eingeladen, aber ich abgelehnt. Aus Angst? oder doch nur weil ich kein Interesse habe. Kann man als Introvertierter zum Extrovertierter werden? Will man das überhaupt? Eigentlich will ich nur die Eine und sonst niemanden, das interessiert mich denke garnicht. Jedes Mal wenn ich Leute kennenlerne, die nett sind, interessiert mich nicht. Will ich nur weiblich Freunde?\r\nNerven Jungs mich nur? Woran das wohl liegt?	5
+204	2019-09-13 00:00:00+02	Sitze gerade im Zug nachhause & es ist mega akward zu schreiben. Merke wieder gut es mir nach Sport immer geht & muss das eigentlich ausnutzen.\r\nHabe eben mit Sascha telefoniert & es war eigentlich ganz nett.\r\nNetter Kerl. Muss wahrscheinlich mehr ihm machen.\r\nBin wärenddessen Bahn gefahren. Irgendwie unangenehm, aber war mir egal, dass Leute zugehört haben. Vermutlich wegen Sport.\r\nMorgen ist Chris' Bday-Feier. Bin mal gespannt.	5
+205	2019-09-17 00:00:00+02	Mist, schon verkackt. Naja. Chris Feier war echt gut. Waren im A & ich hatte sogar spaß. Und gehe jz doch zu dieser Speakers-Night.\r\nFühle mich gerade wieder ein wenig schlecht & unproduktiv, aber bin auch krank. Will gerade ziemlich viel zocken.\r\nWitcher 3, Tomb Raider, so ne geile Minecraft Mod & No Mans Sky. Weiß noch nicht so ganz, ob das gut ist. Naja gleicht gehts in die Wohnung & dann ins Tkd. Freue mich schon drauf.	5
+206	2019-09-18 00:00:00+02	Heute war ich das erste Mal mit Jannis bouldern. Und damit auch das dritte Mal gesehen. Echt ein cooler Typ. Außerdem hat er mir die dritte Halle gezeigt. Man habe ich mich gefreut. \r\nHabe heute mit Brooklyn 99 angefangen. Hätte echt nicht gedacht, dass die Serie mir so gefällt.\r\nBouldern war übrigens super nice (wie immer eigentlich).\r\nFühle mich gerade relativ normal eigentlich. Was ja nicht schlecht ist.\r\nWerde jetzt Witcher 3 spielen & dann Marianne schauen. Wird das ein Gruselspaß!\r\nMuss eigentlich echt das mit den Weisheitszähnen klären & man ist die Witcher 3 Musik schön.	5
+207	2019-09-20 00:00:00+02	Naja, 3 Uhr Morgens (21.)\r\n\r\nWieso man... Vany ist einfach ein Goldstück. Ich glaube langsam, dass ich sie wirklich liebe. Alles an ihr ist einfach perfekt.\r\nIch fühle mich fett.\r\nAlles ist irgendwie scheiße.\r\n\r\nAchja, Daniel hat mit Michelle Schluss gemacht	5
+208	2019-09-22 00:00:00+02	Jaa... Irgendwie vergesse ich das Schreiben immer.\r\nWie auch immer. Eigentlich fühle ich mich ganz wohl. Habe am Freitag auf dem Winzerfest eine Nummer "geklärt", gut ich hab sie nicht. Aber sie wollte die Nummer Vany schicken. Wobei ich davon natürlich nicht überzeugt bin. Gestern war ich ziemlich lange mit Anna zsm & habe mich echt gut gefühlt. Ich habe letztens von "Liebe" mit Vany geredet. Ich glaube langsam es gibt keine echte "Liebe". Nur Verlangen nach einer Person. Da willst einfach nur bei ihr sein. Und das ist bei mir meistens das Mädchen, mit dem ich mich gut verstehe & als letztes länger zsm war. Momentan also Anna Hofmann. Wieso also warten bis es mit jmd passen könnte & nicht einfach mal ausprobieren. Mein Leben lang suche ich nach der "Einen", aber ich glaube, ich suche nur nach derjenigen, mit der ich zuletzt in meinem Leben zsm sein werde.\r\nWird es die "Eine Richtige" sein? Ich denke nicht, oder vllt war Sie die ganze Zeit vor meiner Nase? Ich sollte anfangen zu leben.	5
+209	2019-09-23 00:00:00+02	War mit Michelle heute bouldern, lustig, aber auch irgendwie komisch. Habe mich danach auch nicht mehr sonderlich wohl gefühlt.\r\nHabe eben Modern Family geschaut & musste mega weinen.\r\nHabe Anna, gefragt ob sie einen Freund hat & sie antwortet nicht.\r\nIch weiß trotzdem immer noch nicht, was ich will...\r\n\r\nSpiele wenigstens gleich Cube World mit Chris. Darauf habe ich schon Lust.\r\n...\r\nSie hat keinen Freund, jz muss ich mich nur trauen nach einem Date zu fragen. Dazu morgen mehr.	5
+210	2019-09-24 00:00:00+02	Wer hätte es gedacht, aber ich habe mich getraut. Auch wenn Anna 5min später noch nicht geantwortet hat (lol), fühle ich mich super. Ich habeglaube 5min oder länger gebraucht um ne Memo abzuschicken, aber in dem Moment, als ich auf Senden gedrückt habe, fühlte ich mich großartig. Voller Mut, Endorphinen & wahrscheinlich auch Adrenalin. Jetzt bin ich natürlich super gespannt auf die Antwort.\r\nChris hat mich für Samstag in so ne Disko/Club eingeladen und ich habe zugestimmt.\r\nEs war übrigens die Idee von Leon Orthey. Er kommt dann natürlich mit. Bin mal gespannt.\r\nWärend ich das schreibe, beruhige ich mich übrigens, also wegen Anna & das ist gut.\r\nHier in dieses Buch zu schreiben ist denke ich einer der Besten Dinge, die man machen kann.\r\nEs hilft Gedanken zu sortieren, dich abzuregen & es verschafft einem irgendwie Mut.	5
+211	2019-09-25 00:00:00+02	Habe gut geschlafen. Von der vierten Dimension geträumt...wie in einem minecraft Video, lol.\r\nHeute gehts bouldern & stretchen. Allgemein Fitness erhöhen & den Traum verfolgen senkrecht nach oben kicken zu können.\r\nAußerdem will ich mal ne Serie auf Englisch anfangen. Sonst ist es nämlich kacke, dass die Schauspieler immer andere Stimmen haben & Englisch fließend verstehen zu können wäre schon toll.\r\nstill waiting for Anna...\r\n...\r\nAm Dienstag gehts in den Urlaub, yay. Freue mich schon, bin aber nicht in  Richtiger Form (mist).\r\nHeute war ein guter Tag.\r\nBoudldern, Stretchen & dann auch Fahrrad fahren. Danach fühlt man sich einfach gut.\r\nAnna schreibt jedoch immer noch nicht & das macht mich langsam nervös.	5
+212	2019-09-27 00:00:00+02	Mist, gestern habe ich es tatsächlich vergessen zu schreiben. Dafür schreibe ich jz um 8AM.\r\nGestern war Speakers Night & sie war definitiv gut. Ob es was für mich geändert hat, weiß ich nicht.\r\nAber ich merke das NoFap hilft.\r\nMache es zwar noch nicht lange, aber habe definitiv mehr Energie.\r\nHeute gehts vllt ins A & mache mir wieder Tinder. Einfach um Erfahrung zu Sammeln.\r\nAußerdem schaue ich, ob ich das mit Ebay schaffe. Geld undso.	5
+213	2019-09-28 00:00:00+02	Habe zwar erst heute das mit Ebay gemacht, aber wenigstens habe ich es erledigt. Nach dem Urlaub mach ich das dann weiter.\r\nHabe außerdem meine Lesezeichen aufgeräumt & die Ordnung tut gut.\r\nWas auch gut tut (vallah), ist dass ich mich gedehnt habe. Ist das geil haha.\r\nAußerdem bin ich heute um 6.32 Uhr aufgewacht & fühle mich echt gut. 13.29 ist es mittlerweile & bin Stolz auf mich, dass ich schon zwei Tage früher aufgestanden bin. Zwar nicht oft, aber ich fange wenigstens an.\r\nGestern habe ich Lovoo & Tinder wieder installiert & hatte sogar hmd angeschrieben.\r\n("Pass auf, dass du nicht ins Wasser fällst"). Ich erhoffe mir damit natürlich nicht viel, aber ich bin wenigstens einmal über meinen Schatten gesprungen.\r\nAnna schreibt übrigens immer noch nicht & hat die Memo auch nicht gehört. Mittlerweile ist mir das auch egal.\r\nSpäter gehts Bouldern. Und Simon kommt wahrscheinlich auch mal mit.	5
+214	2019-09-29 00:00:00+02	Wieder um 6.32 aufgestanden & wäre fast wieder schlafen gegangen, aber habe mich zum Glück nicht dazu entschieden. *Stolz*.\r\nGestern war der Rhein-Main-Cup in Mainz & bin um ehrlich zu sein jetzt mega hyped, das dann auch zu machen. Mal schauen wie gut ich 2020 werde. Will nach dem Urlaub dann auch 3 Mal bouldern gehen.\r\nMal schauen wie ich das dann mit TKD mache.\r\nHeut auch das erste Mal mit einen Zeitplan für heute gemacht. Habe die Sache zwar bissel durcheinander gemacht, aber egal.\r\nHabe auch ne Stunde Physik gemacht.	5
+215	2019-09-30 00:00:00+02	Gerade eben gewaxt, tat bissel weh, aber definitif ertragbar.\r\nHeute erst um 8 aufgestanden, ist aber nicht so schlimm, weils trotzdem Energie gekostet hat, Anna hat gerade ne Memo geschickt. Gott wieso fühle ich mich so komisch...Aufgeregt? Angst? Wahrscheinlich sagt sie sowieso nein.\r\n... Klar hat sie Nein gesagt. Was denke ich mir überhaupt.\r\nDie Nummer habe ich von Vany auch nie bekommen.\r\nWeiß gerade echt nicht wie ich mich fühlen soll.	5
+216	2019-10-02 00:00:00+02	Gestern vergessen, heute keine Zeit	5
+217	2019-10-03 00:00:00+02	Gut, ich hatte schon Zeit, aber traue mich nicht zu schreiben, wenn Fiona oder Mama dabei ist.\r\nUrlaub ist bisher ganz schön & fühle mich auch ganz wohl, bis auf jetzt. Fühle wieder diese Leere in mir.\r\nUnd allein feiern? Leute kennenlernen? Als könnte ich das.	5
+218	2019-10-04 00:00:00+02	Hatte heute die Massage.\r\nSchön mal berührt zu werden, aber denke nachhaltig hat das nicht viel gebracht (Außer mental).\r\nWerde mir jz bissel mehr Mühe mit Tinder geben. Habe heute mit 3 Mädchen geschrieben & das fühlt sich echt toll an, auch wenn die Gespräche an sich jz vllt nicht so tiefgründig waren.\r\nEin weiterer Schritt in eine bessere Zukunft.	5
+219	2019-10-05 00:00:00+02	Fiona macht die ganze Zeit etwas mit Freunden & ich fühle mich deswegen ganz schön schlecht. Allein sowieso. Irgendwie kann ich das alles hier nicht mehr so richtig genießen.	5
+220	2019-10-09 00:00:00+02	So, bin seit gestern wieder zuhause. War die letzten zwei Tage ganzschön krank/schwach, weswegen ich mich jz aufraffen wollte.\r\nUrlaub war gut. Aber nächstes mal brauche ich jmd dabei.\r\nHeute sei es noch ein Chill-Tag.\r\nHätte gernen meine PC hier.\r\nNiemand will morgen bouldern ._. .	5
+221	2019-10-13 00:00:00+02	So, ab jz wieder jeden Tag. Die Tage brauchte ich mal ne Pause zum zocken.\r\nNo Man's Sky ist schon ein tolles Spiel, wenn auch nicht das Beste.\r\nAb Morgen startet wieder die Uni. Bin schon gespannt & will mich jz auch mal richtig anstrengen.\r\nPhysik ist super & die Chance das zu studieren sollte ich mir nicht entgehen lassen.	5
+222	2019-10-14 00:00:00+02	Erster Uni-Tag überstanden. Gut, war ja nur eine Stunde. Jetzt ist es 11 Uhr & ich weiß garnicht so recht was ich machen soll & doch gibt es so viel zu tun.	5
+223	2019-10-15 00:00:00+02	Heute nen längeren Tag gehabt & gleich gehts ins TkD. Hoffentlich finde ich da ein paar Freunde.\r\nErste Info/EiP-Vorlesung war oke, aber habe niemanden gefunden.\r\nIch denke immer, ich wäre für diesen sozialen Scheiß nicht gemacht, aber ich sollte es trotzdem versuchen. Wie gerne würde ich mit einer Freundin auf eine einsame Insel ziehen & dann unser Ding durchziehen.\r\nAber das wird wohl erstmal nichts.	5
+224	2019-10-16 00:00:00+02	Heute erstes mal allein gebouldert, war bissel cringe, weil ich einfach zu schüchtern bin, aber bin mega froh, dass ich das getan habe. \r\nVersuche dann am Wochenend mir eine Routine zusammen zu stellen.\r\nBin gespannt wie das weitere Studium verläuft, aber bin voller Hoffnung.\r\nMorgen ist die Söf. Bissel zwiegespalten, aber freue mich, vorallem weil auch Chris M. kommt.\r\nGleich schaue ich weiter Horror Lp mit Headset von Pan.\r\nWas mich noch stört ist Stefan. Er ist abends so laut, aber traue mich nicht etwas zu sagen...	8
+225	2019-10-17 00:00:00+02	Heute tut mir echt alles weh, so viel Muskelkater...geil :'D\r\nHabe mich in der Ex Übung mit jmd "angefreundet". Er ist zwar bissel komisch & aufdringlich, aber denke ganz nett. Wollte die Gruppe eigentlich wechseln, aber bin mir bissel unsicher.\r\nBald fängt die Söf an & es regnet. \r\nBin schon sehr gespannt.	5
+226	2019-10-21 00:00:00+02	Habe mir heute ein Bullet Journal gekauft & hoffe, dass ich damit erfolgreich meine Produktivität steigere.\r\nAußerdem habe ich ein Wohnantrag für K3 gestellt. *Hoff*	5
+227	2019-10-23 00:00:00+02	Gestern Caro, aus TkD in Alzey wieder getroffen. Wow ist sie süß & auch nett. Hoffe zumindest, dass wir uns über die Zeit echt gut verstehen.\r\nWar auch mit Joel & vielen anderen, auch Nicola bouldern.\r\nDie sind alle richtig cool.\r\nSchaffe jz die meisten blau-grünen Routen & bin mega stolz.\r\nFange ab heute mein Bullet Journal an & hoffe dass ich damit produktivär werde etc.\r\nHeute wäre eigentlich Saschas Workshop, aber es macht glaube wenig Sinn dahin zu gehen.\r\nGlaube nicht, dass es mir was bringt & will auch lieber lernen.\r\nJetzt gehts aber erstmal heim.	6
+228	2019-10-24 00:00:00+02	Heute das erste Mal den Man Bun getragen. Für TkD mega praktisch, auch wenn einzelne Strähnen rausfallen.\r\nIn der Uni hat niemand was gesagt, was ganz schön an mir gezerrt hat, aber jetzt versuche ich drüber zu stehen.\r\nJetzt schaue ich erstmal Sam & Colby weiter & dann gehts bald auch schon ins Bett.\r\nHeute Morgen MfP geschwänzt. Bin nicht ganz so stolz auf mich & hoffe, dass es sich ab November ändert (Bullet Journal)	5
+229	2019-11-12 00:00:00+01	Entschluss Info zu studieren\r\n\r\nZiel: Eigenes Spiel allein programmieren\r\n-> Musik, Voice, Art etc.	10
+230	2019-11-13 00:00:00+01	Burgerabend mit Robin, Monika & Noah & Christian\r\nMonika steht wahrscheinlich auf mich.\r\nIhre Hand war für ne Minute auf meiner.	5
+231	2019-11-14 00:00:00+01	Spotify wieder aboniiert.\r\nMusik ist so verdammt geil manchmal.	6
+232	2019-11-15 00:00:00+01	Erstes Mal Gras. -> Langweilig\r\nDeeptalk mit Robin über Family\r\n\r\nEntschluss evtl Biographie zu schreiben.	7
+233	2019-11-16 00:00:00+01	Weiter Speiel programmieren lernen.	5
+234	2019-11-17 00:00:00+01	Ganzen Tag für linux Arch gebraucht & am Abend dann Linux Mint installiert	5
+235	2019-11-19 00:00:00+01	HTML angefangen zu lernen	5
+236	2019-11-20 00:00:00+01	Besuch Vany	5
+237	2019-11-25 00:00:00+01	Bouldern & Sophie getroffen (Anmerkung: Dadurch kam ich in die Boulder Gruppe und lernte damit auch erst Jenifer kennen)	5
+238	2019-11-26 00:00:00+01	Python Spiele programmiert.	5
+239	2019-12-02 00:00:00+01	Marit schrieb.	8
+240	2020-08-23 00:00:00+02	Tag des Schreibens ist 9.11.2021\r\n\r\nVom 22. auf den 23. schlief ich das erste Mal bei und teils auch mit Jenifer Behr. Sie war somit die erste Freundin, die ich hatte (wenn auch nur kurz). Ich bin dankbar für diese Erfahrung und wünschte, dass ich das ein wenig länger ausgelebt hätte. Jedoch waren wir vermutlich nicht für einder geschaffen.\r\nLeider weiß ich ich nicht mehr genau wann ich sie das erste Mal sah, aber es war ungefähr eine Woche davor. Sprich das war das dritte mal, dass wir uns sahen.	10
+241	2021-09-10 00:00:00+02	Tag des Schreibens: 9.11.2021\r\n\r\nZungenkuss mit Lara. Es war aufgrund der Wahrheit oder Pflicht App (Die ich Lara für 8 oder 9 Euro gekauft habe)\r\nDamn war das ein guter Kuss.	10
+242	2021-10-02 00:00:00+02	Tag des Schreibens: 9.11.2021\r\n\r\nDas erste Mal zumindest für einen Abend soetwas ähnliches wie ne F+ gehabt.\r\nIch weiß nicht so recht was Lara an diesen Abend alles ernst meinte, jedoch hat sie mir einen geblasen, wir haben wild rumgemacht und sie hat sich an mir gerieben.\r\nHätte alles definitiv besser laufen können, aber bin froh dass es passiert ist.\r\nJedoch hoffe ich das solche "Performance Probleme" von mir in Zukunft nicht mehr passieren..	10
+243	2021-11-09 23:10:19.68198+01	Habe heute den Rest des Tagebuchs/Bullet Journals digitalisiert und ich muss schon sagen, es ist echt faszinierend darin zu lesen. Bin mal echt gespannt was in 5 Jahren so ist, und wie ich drauf reagiere alte Einträge zu lesen.\r\nWollte heute eigentlich bouldern aber habe das auf morgen verschoben.\r\nIch gewöhne mir ja jetzt an abends zu gehen und erhoffe mir damit ein wenig meine social Skill zu verbessern. Mal schauen wie das funktioniert.\r\nBin übrigens immer noch bissel sad darüber, dass Kristof irgendwie nicht mehr mit bouldern kommt.\r\nHabe heute auch Jenifer mal wieder angeschrieben. Sie ist ja wieder in Mainz und wir wollten eigentlich zsm bouldern, aber da sie nicht geschrieben hatte, dachte ich mir mal, dass ichs versuche.\r\nBisher hat sie noch nicht geantwortet und glaube auch um ehrlich zu sein nicht, dass sies wird. Aber wer weiß das schon, ich lasse mich gerne überraschen.\r\nIch denke übrigens wieder über die B2B Massage nach. Ist halt schon reizend und solange ich single bin, könnte man das eigentlich ja mal versuchen.	5
+268	2022-05-26 19:03:10.196984+02	Joar, irgendwie schaffe ichs nicht. Kann auch nicht wirklich viel dazu sagen..\r\nAber was schönes passiert ist, ist dass ich Teresa am Dienstag getroffen habe.\r\nKurz unterhalten und uns dann fürs Bouldern verabredet.. Ich bin sooo gespannt darauf. Noch steht kein Termin fest, aber ihre Reaktion war schon sehr zuversichtlich.\r\nKeine Ahnung ob ich mir wieder Dinge einbilde, aber ich mag sie schon sehr.	5
+244	2021-11-10 16:07:19.885358+01	DAMMIT! Wieso ist es so schwer für mich mit Pornos aufzuhören...\r\nMindestens einmal die Woche, eigentlich mehr denke ich dran mir wieder ne Nutte zu holen, hänge dann ewig auf Webseiten rum und im Endeffekt schaue ich dann einfach Porn und meine Motivation für Alles geht wieder den Bach runter. Es ist 16 Uhr und ich wollte eigentlich um 5 Bouldern gehen. Jetzt fühle ich mich aber so freaking unmotiviert, dass ich es wahrscheinlich bleiben lassen werde und einfach One Piece schaue..\r\nIch sollte eigentlich auf was für die Uni machen, aber kann ich mich darauf konzentrieren? Natürlich nicht.\r\nWie schaffe ich es meinen Willen wiederherzustellen? Durch kleine Schritte? Wie klein denn bitte. Es funktioniert doch sowieso nichts.\r\nWahrscheinlich müsste ich mich selbst irgendwie ins kalte Wasser schmeißen.. aber wie? Und was für Wasser.\r\nWurde heute in die Ex2 Whatsappgruppe hinzugefügt, mal schauen wie das wird.	3
+245	2021-11-11 21:14:53.00108+01	Habe heute nochmal das Geschnetzelte gemacht, das ich letztens mit Lara gemacht habe und dieses mal besser Gewürzt. Es hat deutlich besser geschmeckt und ist somit wohl das erste richtige Rezept in meine Repertoire.\r\nDanach war ich dann sogar motiviert genug Bouldern zu gehen obwohl ich heute eigentlich einen Chilligen machen wollte. Habe zwar wieder niemanden so wirklich angesprochen aber lief trotzdem gut. Muss erst mal drauf klar kommen alleine in solch Menschenmengen zu sein.	6
+246	2021-11-12 22:27:50.688935+01	schon wieder quanteninformationen geschwänzt.. \r\ndas einzige wirkliche Lächeln das mir heute gewährt wurde, ist dass lara ihr vorstellungsgespräch erfolgreich gemeistert hat. Wenigstens hat sie ein wenig Glück.\r\nJenifer hat heute geschrieben und meinte dass sie die Nachricht nicht bekommen hatte. Glaube ich ihr sogar weil Signal halt kaum benutzt wird. Sie meinte aber dass es dieses Jahr wohl nichts mehr mit Bouldern wird, was definitiv schade ist, aber was soll man machen.\r\nIch frage ich mich ob ich sie fragen sollte, ob wir uns mal so treffen, aber ich weiß halt halt wirklich nicht ob das so eine gute idee ist, andererseits will ich auch einfach nur mit ihr im bett liegen und kuscheln und serie schauen. mehr will ich doch allgemein garnicht..	4
+247	2021-11-14 20:14:31.427917+01	Gestern waren wir auf der Erasmus Party und es wahr ziemlich nice.\r\nUrsprünglicher Plan war ja nur mit Domi (Simon verkatert)\r\nJedoch sind dann noch einige mehr mitgekommen.\r\nDarunter auch Nora, welche an sich ziemlich süß war, jedoch irgendwann leider abgehauen.\r\nWar feiertechnisch mega nice, aber leider bekomme ich meinen bitteren Beigeschmack halt nicht weg. Ich freue mich schon so hart auf solche Partys inklusiver Freundin..	6
+248	2021-11-15 21:14:42.658302+01	Gibt eigentlich nicht viel zu sagen.\r\nHabe das erste mal selbst Pfannkuchen gemacht, welcher viel zu dick war und dementsprächend nicht so gut.\r\nUnd will ab heute wieder mehr zeichnen. Habe auch bissel was gezeichnet aber sieht halt kacke aus.\r\nWie ich bisher nur einmal in der Wohnheimbar war... Das ich es nicht schaffe mal allein zu gehen.	4
+249	2021-11-17 17:59:36.885529+01	Fiona hat sich wohl von Yannic getrennt.\r\nJoar, habe eigentlich nichts zu sagen.\r\nIch hoffe nur dass ich den Unistuff alles schaffe und mich langsam mal bissel aufraffe.	5
+250	2021-11-18 14:32:25.979936+01	(Tag des Schreibens: 20.11.2021, habs bissel verpennt)\r\nBeim bouldern das erste mal eine grün-gelbe route ziemlich gut hinbekommen. Zwar noch nicht geschafft, aber in ein paar Trys ist die definitiv machbar.\r\nAm Abend spontan mit Simon auf die Geographiestudium party gegangen, was ich definitiv nicht bereue. Vorallem, wäre Simon 4min später gekommen, wäre ich wieder nachhause gegangen.\r\nIm Prinzip war es kein besonderer Abend, aber das viele getanze und auch mal ein wenig aufmerksamkeit von Mädels bekommen ist schon ziemlich schön.\r\nDie Barkeeperin hat mir irgendwie schöne Augen gemacht (Kann ich mich aber auch irren) und wir haben Jenny und Hanna kennengelernt. Wobei Hanna echt süß ist und Jenny.. Naja mit ihr hätte man vermutlich schlafen können. Sie ist aber auch sehr süß.\r\nSchade ist ein wenig, dass Hanna mir eine falsche Nummer gegeben hatte, aber ich glaube tatsächlich, dass das keine Absicht war.. Naja wir sehens ja. Ich bekomme demnächst hoffentlich von Simon die Nummer von Jenny und dann.. Naja bin mal gespannt.	6
+251	2021-11-19 14:32:25.979936+01	(Tag des Schreibens: 20.11.2021, zwei Tage verpennt, whoops)\r\nHeute wohl das erste Mal seit langer Zeit einfach mal ein glücklicher Tag gewesen. Habe zwar Masturbiert und dann bis 15Uhr geschlafen, aber ich war mal relativ zufrieden mit allem.\r\nAuch wenn ich jetzt doch ein wenig bereue Abends nicht mit ins Willys gegangen zu sein. Hatte dann doch ziemlich viel Energie Abends beim Schauen der Lol Serie Arcane.\r\nNaja, hatte halt bissel Angst meine gute Laune wieder mit einem schlechten Abend zu versauen.. In Zukunft werde ich das nicht nochmal machen.	7
+252	2021-11-21 19:35:46.017068+01	Heute war ziemlich langweilig	4
+253	2021-11-22 19:37:06.332861+01	Heute um 8Uhr aufgewacht, wegen der Rauchmelderüberprüfung und zum Glück kam er auch heute. Sprich, theoretisch muss ich morgen nicht so früh aufwachen. Mal schauen ob ichs trotzdem mache, obwohl ich heute endlich mal wieder mit Domi in unsere Bar gehe. Bin mal gespannt.\r\n\r\nAchja, habe endlich das Tiktoklied aus ner Ad gefunden xD (abcdefu - Gayle)	5
+254	2021-11-23 22:44:57.631607+01	Gestern ist der Barabend ausgefallen, vermutlich wegen Corona. Ich bin mir nicht sicher ob ich Domi hätte fragen sollen, ob wir stattdessen ins Willys gehen.. Aber vermutlich schon.\r\nMal schauen ob ich eines Tages mehr Mut für alles habe.\r\nIch habe übrigens eben realisiert, dass all meine "mutigen" Entscheidungen nur daraus bestanden, es übers Internet zu machen.. Wie zum Beispiel irgendein Mädchen anzuschreiben oder ähnliches.\r\nZumindest die, die wirklich "schwer" waren.\r\nSachen wie alleine Bouldern oder alleine ins Kino zu gehen (heute) zählen nicht wirklich. Natürlich realisiere ich, dass das Teil des Fortschritts ist, jedoch wird es für mich langsam mal Zeit richtige Entscheidungen zu fällen und Risiken zu wagen.\r\nDer Film Eternals war übrigens nice. War mal witzig alleine ins Kino zu gehen, aber würde es vermutlich nicht wiederholen. Außer ich bin glücklich im Leben und niemand hat Zeit/Lust.\r\nSimon hat mir übrigens immernoch nicht Jennys Nummer gegeben. Bzw sie gefragt. Ich werde ihn vermutlich morgen fragen, ob er sie mir einfach gibt.\r\nHeute war außerdem Karaokeabend im QKaff. Gott, wie schön es wäre Menschen zu haben, mit denen ich einfach so solche Dinge machen könnte..\r\n\r\nAchja, gerade eben ein Match auf Tinder bekommen. Wurde auch mal Zeit. Katharina, sieht süß und witzig aus. Ich machen mir natürlich keine Hoffnung, aber man weiß ja nie. Risiken und so.	5
+269	2022-06-04 19:45:08.323489+02	Gestern einen schönen Abend mit Lara, Luca und zwei Freunden von ihnen gehabt. Ein wenig unangenehm wie nah Lara mir manchmal kommt.. das aber auch nur wegen Luca.\r\nAndererseits muss ich die ganze Zeit an Teresa denken und hoffe einfach soooo sehr dass es nächste Woche zu irgendwas kommt.	6
+270	2022-06-14 21:43:59.014323+02	Heute habe ich Angefangen Japanisch zu lernen. Bin mal gespannt wie sehr ich es durchziehe und wie es in einem Jahr so aussieht.\r\nBisher kann ich:\r\nあえういお\r\nかけきこく\r\nがげぎごぐ\r\nAlso im Endeffekt nur ein wenig Alphabet und ein paar kleine Worte.	6
+283	2023-10-17 15:02:06.408406+02	Gestern war ein super Tag. Spontaner Barabend war sehr toll und anschliessend das erste mal einen Anus geleckt.. lul.\r\nSpicy war meine Reaktion? haha\r\n\r\nHeute erster Monatstag und wir gehen in die Rheinwelle <3	10
+255	2021-11-24 19:24:41.142806+01	Natürlich habe ichs verkackt. Also erstmal hat Hanna natürlich einen Freund.. Laut Jenny hat sie wohl ausversehen mir die falsche Nummer gegeben, aber das ist ja jetzt sowieso egal.\r\nIch habe dann versucht Jenny zu fragen, auch wenns blöd war (Trostpflaster wie sie sagt) ob sie Lust hat.. Hat sie verständlicherweise in den falschen Hals bekommen und mich direkt blockiert. Hat zwar wohl auch einen Freund, aber wäre trotzdem schön ein paar Freunde zu machen und jetzt denkt sie auch ich wäre ein Arschloch.\r\nMaaaaaaan.. Erst aufs falsche Mädchen gegeiert und dann auch noch dumm sein. Das kann auch nur mir passieren.\r\nIch sollte aufhören mich immer direkt auf ein Mädchen zu fixieren und nicht Angst davor zu haben falls mal eine mich ein wenig mag..\r\nJenny hatte mir ja zumindest zuneigung gezeigt.. Wobei, wie hätte ich mich dann gefühlt? Wenn sie wirklich einen Freund hat und etwas passiert wäre, oder auch nicht und dann erfahren hätte dass sie nen Freund hat. Dann wäre vermutlich Hanna mein "Trostpflaster" gewesen..\r\nWar also von Anfang an zum Scheitern verurteilt. Gott geht mir das aufn Sack.\r\nVorallem kommt sie mir mit "Was würde wohl Simon denken?".. Jo, ich dachte der hat doch Maria als Quasifreundin.. Wenn er sich dann wirklich ranmachen würde, wäre das ja auch ganz schön whack..\r\nEYYYYYY ich hasse es einfach nur.\r\nWas begrabscht mich Jenny aber auch und wieso hatte Hanna nur so schöne Augen..\r\nAHHHHHHH\r\nIch hoffe nur das backfired nicht in Zukunft, aber ich denke mal sowieso nicht.\r\nIst mir das alles unangenehm..	3
+256	2021-11-27 14:20:05.977826+01	Gestern vergessen, und davor den Mac zuhause gelassen.\r\nAllgemein aber ziemlich down gewesen.\r\nIch denke, ich fange jetzt wieder an mich zu dehnen und evtl auch den Handstand zu trainieren.\r\nSollte langsam mal anfangen an mir selbst zu arbeiten. Vielleicht gehts mir ja dann mal endlich besser.\r\nAchja, bin doch nicht zum Optiker..habe in letzter Sekunde gekniffen. (Kontaktlinsen)	4
+257	2021-11-29 17:37:23.332252+01	Gestern nicht wirklich lust gehabt zu schreiben. Habe 7 Folgen 7 vs Wild gesehen und das wars auch schon.\r\nHeute mit Halsschmerzen und komischer Zunge aufgewacht. Hatte schon "Angst" Corona zu haben aber erster Test sagt nein.\r\nChris und ich haben jetzt ausgemacht, dass wir Dark Souls 3 zsm durchzocken, bzw er mit mir, da er wohl schon im NG+7 oder so ist.\r\nLara hat gefragt, ob wir am Wochenende zsm ins Willys gehen. Bin mal gespannt wie das wird.	4
+258	2021-12-02 14:15:22.880447+01	Die letzten Tage krank gewesen, jetzt gehts aber ein wenig besser, aber mir Lara werde ich mich am Freitag wohl nicht treffen.\r\nFiona hatte mir ja einen Barbyadventskalender gekauft..werde ihn aber nicht weiter benutzen. Fühle mich schon leicht verarscht.\r\nDie Serie Ragnarok ist cool.	5
+259	2021-12-04 01:48:01.14673+01	2Uhr morgens, mache mir jz nen yumyum und vorhin Ragnarok Staffel 2 zuende geschaut.. Hat leider stark nachgelassen, aber hoffe dass die dritte, sobald sie rauskommt dann besser ist.\r\nHabe auch The Chilling Adventures of Sabrina zuende geschaut.. Leider bissel hektisches Ende, aber ganz oke.. Werde die Serie aufjedenfall vermissen.\r\n\r\nAbends:\r\nBin wieder ziemlich gesund, abgesehen davon dass mir noch relativ häufig die Nase läuft.\r\nHeute viel Dark Souls 3 mit Chris gezockt und bin ziemlich froh, dass ich das endlich durchzocken kann.\r\nJan hatte mir geschrieben, dass ich mal mit bouldern soll weil da ein Mädchen wäre, die zu mir passt. Ich muss zugeben, dass ich schon sehr gespannt bin, auch wenn ich mir nicht wirklich viel Hoffnung machen soll.\r\nDas Blockwerk hat ab heute die Regelung, dass man jederzeit die Maske tragen muss, also auch an der Wand. Ist mir zumindest lieber als 2G+\r\nGott bin ich froh, wenn diese Coronakacke vorbei ist. Mal schauen ob die Omikron-Variante so schlimm ist.	4
+260	2021-12-05 21:06:01.884647+01	Heute wieder ne leichte Motivations Down Phase.. Ich weiß nicht so wirklich mit mir anzufangen, bzw was ich programmieren soll.. Habe ansich ja lust, aber mir fällt irgendwie nichts ein..	4
+261	2021-12-06 23:19:07.617594+01	Schaffe es irgendwie nicht so wirklich mich für die Uni aufzuraffen, was mir ein wenig zu schaffen macht.. aber Dark Souls von Pedda zu schauen ist halt angenehmer..\r\nMama hat heute einen positiven Corona Schnelltest gemacht. Mal schauen wie sich das auswirkt..\r\nIrgendwie ein wenig traurig, dass Lara nicht mal fragt wie es mir geht, obwohl ich ja ziemlich krank war, aber naja.\r\nHabe außerdem von Laureen geträumt, wie wir zusammengekommen sind, aber ihre Eltern nicht so wirklich glücklich damit sind und das wohl auch der Grund war wieso wir nie zusammengekommen sind.. verrückt.\r\nJenifer postet immer wieder Instastorys aus dem Krankenhaus und heute ist sie wohl das erste Mal nach ein oder zwei Wochen wieder richtig gelaufen.. Ich frage mich schon was mit ihr ist.. aber ich sollte mich wohl aus ihrem Leben rauslassen, weswegen ich ihre Storys jetzt auch gemutet habe.	4
+262	2021-12-10 22:10:35.042982+01	Vorgestern zwei Spiele fertig gespielt, Dark Souls 3 (Wurde aber auch mal Zeit) und Resident Evil 1. Irgendwie immer ein sehr befriedigendes Gefühl Spiele zuende zu spielen.\r\nSonst nicht viel passiert.. Mama hat Corona, aber ihr gehts gut und ihr Geruchssinn kommt auch langsam zum Glück zurück.\r\nSchaue gerade auf Netflix Vikings und Sex Education.. Vikings ist sehr gut und Sex Education ist einfach nur Trash-TV um ein wenig abzuschalten. Auch wenns mich ein wenig depri macht.\r\n\r\nHatte heute einen witzigen Traum.. Ich wahr nicht ich selbst sonder eine Lisa (Glaube ich. Die von Simpsons) Jedenfalls gings darum dass mir irgendjemand erzählen wollte wie langweilig mein Name doch sei.. Dann wurden mir mehrere coole Mädchennamen wie zB Jinx aufgezählt und am Ende hieß es: "Und dein Name ist..". Dann hat Fiona im Reallife von unten laut meinen Namen hochgeflüstert.. War schon ein weirder Zufall.	4
+263	2021-12-12 17:21:46.493678+01	War gerade endlich mal wieder bouldern.. Damn meine Finger sind wieder schwach geworden. Aber tat wieder gut, Übermorgen dann wieder mit Kristof.\r\n\r\nBin außerdem am überlegen, ob ich weit wegziehen soll und eine Ausbildung oder ähnliches machen soll. Der Gedanke macht mich irgendwie Glücklich, aber natürlich habe ich auch Angst.. Außerdem bin ich mir nicht sicher ob ich das wirklich machen soll, aber weiterstudieren ist gerade nicht so richtig das was ich wirklich will..	4
+264	2022-01-06 15:56:14.873729+01	Lang lang ists her.\r\nIst aber auch nicht wirklich was passiert. Weihnachten und Silvester waren oke, ansonsten alles relative langweilig.\r\nSuchte gerade bissel Subnautica und habe jetzt ne Switch, aber sonst..\r\nMorgen gehts mir Kristof für eine Nacht nach Bochum um dort zu Bouldern. Bin schon gespannt, vorallem auf die relativ lange Fahrt.	5
+265	2022-05-09 11:18:20.466517+02	God dammit.\r\nEigentlich will ich ab heute mal nen Dopamin Detox versuchen, aber theoretisch darf ich immernoch nicht raus.. Habe anscheinend immernoch ein wenig Corona. Ich überlege halt echt ob ich drauf scheiße. Will halt ENDLICH damit anfangen mein Leben zu leben. Es ist jetzt schon die vierte Uniwoche und irgendwie habe ich schon alles verkackt.	4
+266	2022-05-11 10:07:31.19081+02	Okay, ich bin endlich wieder in der Wohnung. Bin mir nicht sicher ob ich noch Corona habe, aber das husten hat aufgehört, also werde ich es riskieren in die Uni zu gehen. Mehr aber noch nicht.\r\nIch werde ab heute mich an dem Dopamin Detox, Fasting oder eher gesagt Wechsel?\r\nAber genaugenommen will ich einfach nur weniger Serien etc schauen und dafür endlich anfangen mein Leben zu leben. Also good luck me.	6
+271	2022-08-12 09:23:14.340736+02	Gleich schreibe ich Kommunikationsnetze.. Die erste Klausur seit längerem. Hoffe einfach nur dass ich sie bestehe und wenigstens ein bisschen Fortschritt in mein Studium bekomme.\r\nGleich danach gehts mit Lara in die Eifel für das Wochenende. Dort findet dieses Büx Delüxe Tunier statt und wir wildcampen. Habe ein wenig Angst davor, aber freue mich auch.\r\nIrgendwie bin ich froh wenn das Wochenende vorbei ist.	6
+273	2022-11-17 17:19:57.530288+01	jo.. soviel dazu.\r\n\r\nHeute Abend mit Michelle ins TKD, wird bestimmt witzig.	3
+274	2022-11-18 12:13:43.246912+01	1. Mit Michelle gestern im TKD war echt witzig. Mit ihr kann man sich wirklich gut unterhalten und es macht eigentlich immer spaß mit ihr.. schade natürlich dass sie nen Freund hat, aber nachdem mit Lena war das echt nötig. Samstag gehe ich wohl mit ihr und ner Freundin ein paar Bars abklappern. Darauf freue ich mich schon sehr ^^\r\n2. Ich bezweifle es immer noch seeeeeehr, aber wenn es wirklich stimmt werde ich heute jemanden entjungfern. Jup es sieht so aus als würde Lorry es heute zum ersten mal mit mir tun. Wow allein der Gedanke.. Ich bin echt mal gespannt.	6
+275	2022-11-18 14:33:16.629128+01	Ich werds aber nicht durchziehen.. Das ist mir einfach vieeeeel zu SUS ^^"\r\nVllt ja am Sonntag, aber kann mir einfach nicht vorstellen dass sie das ernst meint. Vllt bin ich ja dumm, aber da ist mir das Risiko einfach zu.. somal ich mich dann vllt auch ein wenig ausgenutzt fühle lul	5
+276	2023-02-17 16:42:50.926985+01	Machen wir mal wieder nen Eintrag.. Momentan viel am lernen.. tatsächlich auch mal wirklich, wohl das erste mal in meinem Leben. Liegt halt an Elisa, welche mit mir zsm in der Bib lernt. Und in den Pausen spielen wir dann Tischtennis ^^ Software Engineering und DSeA kommt als nächstes, bin mal gespannt. Danach dann das SE Praktikum, eieiei, dann VLLT kleiner Frankreich Uralub. Wäre schon nicht und dann Intensivkurs für Russisch ^^	6
+272	2022-11-16 22:44:28.095967+01	Wird wahrscheinlich sowieso egal sein.. aber wenn doch nicht, werde ich mich vllt irgendwann freuen.\r\nIch habe heute Lena zum ersten Mal getroffen. Ein unglaublich schönes Mädchen, mit der ich mich unheimlich gut verstanden habe. Habe aber das Gefühl als wäre sie weit über meinem Niveau, oder will sowieso nur Freunde kennenlernen.\r\nSo stehts zumindest in ihrem Tinderprofil, aber wer weiß, vllt habe ich ja ein wenig Glück. Kann zumindest nicht aufhören an sie zu denken.. Ich werde sie morgen nach einem zweiten Date(?) fragen fürs Wochenende.. hoffe so sehr dass sie Zeit und Lust hat.. und dass dieses dann auch gut abläuft und ich nicht schon wieder gefriendzoned oder ähnliches werde....	5
+277	2023-02-22 21:55:34.8847+01	Heute mit Nanoha bouldern gewesen, sie ist schon sehr süß und niedlich ^^\r\nSie hat mir davon erzählt, dass sie auf keine Beziehungen aus ist und auch noch keine hatte, was jetzt nicht schlimm ist, aber irgendwo auch ein wenig schade haha.\r\nAnders als mit Elisa, bei der ich nicht aufhören kann an sie zu denken. Gott ist das nervig Single zu sein. Jedes Mädchen, welches man mag geht einem einfach nicht aus dem Kopf, wobei sich mit ihr alles so einfach anfühlt..	5
+278	2023-03-26 12:02:59.310699+02	Die letzten 4 Tage das erste Mal alleine im Urlaub gewesen, genauer in Paris.\r\nBin so froh endlich diese Erfahrung gemacht zu haben und würde es direkt nochmal machen.\r\nDie erste zwei Tage waren ein wenig einsam, aber sobald ich angefangen habe Leute anzusprechen wurde es wesentlich besser. Roberta (Lithauen) und Jam (Deutschland) zum Beispiel, ich hoffe sie irgendwann mal wieder zusehen. Genauso wie Viktoria aus Russland ^^\r\nNick (Boston), Sergio (Mexikaner) und die Mexikanergruppe sowieso :D	7
+279	2023-08-21 14:04:21.452277+02	Ach Sonja... Eine ganz komplizierte Beziehung gerade ^^" \r\nSie ist vieeel zu süß, aber theoretisch in einer Beziehung..\r\nGestern hat sie mir das erste mal einen geblasen.. und auch wenn ich leider nicht kommen konnte, war das soo schön.\r\nSie ist sehr geduldig mit mir, was mich sie wirklich sehr mögen lässt. Letzte Woche haben wir 5 Nächte miteinander verbracht und es sieht auch nicht so aus als würde es so schnell enden. Wovor ich jedoch ein wenig angst habe, aber zeitgleich auch nicht. Ich genieße die Zeit mit ihr einfach unnormal und bin so sehr glücklich darüber. Wenn auch nur kurz, aber wir waren heute in der Philo Bib und es ist so ein schönes Gefühl mal jemanden zu haben... Wenn auch nur.. naja im Endeffekt F+, auch wenns sich mehr anfühlt. Naja mal schauen.\r\n\r\nUnd zeitgleich habe ich mit Martin auch nen richtig guten Freund gewonnen. Mit ihm kann ich einfach über alles reden :) \r\nJetzt schon traurig dass er nächstes Jahr wegzieht..\r\nIch vermute übrigens dass er was mit Lara hatte.. davon wird er mir gleich mehr erzählen. Aber jetzt erstmal ins Schwimmbad wuhu\r\nUnd danach hoffentlich wieder zu Sonja, bzw sie zu mir hehe	10
+280	2023-09-01 16:53:22.547792+02	Das waren vllt ein paar wilde letzte Tage.. Einfach zwei Mal krank geworden und mein well.. erstes richtiges Mal? Könnte man zumindest so sagen. Aber am Abend des 29.8.2023 haben es Sonja und ich richtig getan. Meine Güte hat sich das gut angefühlt :) Sie ist einfach so ein Schatz und ich hoffe wirklich dass es sich hält..\r\nAm gleichen Abend hatte sie auch eine Nachricht von ihrer "noch-Freundin" bekommen, dass sie das gefühlt hätte es funktioniert nicht mehr so richtig.. Interessantes Timing. Na wir sehen ja mal was passiert.	10
+281	2023-09-20 20:36:05.074447+02	Drei Tage sind Sonja und ich nun zusammen.\r\nSonja will dass ich schreibe dass sie geil ist.. Nun stimmt ja auch haha\r\nMeine Familie hat sie sogar schon kennengelernt und mag sie glaube auch ganz gerne. Das treffen war aber nicht sonderlich lange. Bin mal gespannt aufs nächste.\r\nHeute morgen hatten wir unglaublichen Sex und es fühlt sich echt gut an von Mal zu Mal besser zu werden. Sie genießt es wohl auch sehr. Man kann also sagen ich bin rundum zufrieden.\r\n\r\nNun Elisa macht mir ein paar Sorgen. Sie meinte heute dass sie wohl keinen Sinn im Leben mehr sehe und hat stark mit Depressionen kämpfen muss. Aber sie hat ihrer Schwester wohl versprochen nichts zu machen.. also von daher.\r\nMartin ist viel am arbeiten was ein wenig nervt.. aber naja.\r\nMichelle ist jz zwei Monate pleite gewesen, sprich mit ihr habe ich auch nicht viel gemacht.\r\nLara zieht jz um.\r\nIch habe außerdem Josi im Zug nachm Winzerfest getroffen.. Das war vllt wild und ich bin eeecht froh in dem Moment und danach Sonja gehabt zu haben.\r\nBin sehr glücklich mit ihr und glaube sie auch mit mir.\r\nJz machen wir endlich unseren Vodka-Abend. Yay\r\nAchja gestern waren wir uns Marius skinny-dippen am Mombeach. Naja Sonja nicht aber war drinnen xD War gut	10
+282	2023-10-08 15:59:36.70443+02	Heute Nacht bin ich um 4 Uhr Morgens von unserem Frankreich Urlaub zurückgekehrt. War ein sehr schöner Urlaub mit Fiona, Mama und Nils, auch wenn es manchmal Streitereien gab und es vllt nicht der spannendste Urlaub war. So war es doch seher schön das Meer zu sehen und 7 Tage einfach nur nichts zu tun.\r\nJedoch habe ich Sonja sehr vermisst.. so sehr wie noch nie jemanden und die Freude sie heute wieder gesehen zu haben war imens. Sie hat mich in der Nacht wunderbar in Empfang genommen und sogar uns das erste Mal "Ich Liebe Dich" gesagt. Für uns beide sogar allgemein das erste Mal. Bin ich glücklich sie zu haben.. und das ist so wunderbar gut mit ihr klappt. <3\r\nAußerdem habe ich am Freitag mein erste Tattoo stechen lassen. Den Strohhut für 80 Euro und ich bereue nichts.	10
+284	2023-11-05 15:52:31.012402+01	Dabei meine Seite zu erweitern. Dient tatsächlich nur einen Test.\r\nSollte aber mal mehr schreiben.	7
+285	2023-11-19 11:17:23.650807+01	Könnte mal mehr hier schreiben..\r\nSeite ist jetzt fast komplett für die Öffentlichkeit zugänglich. Hat sogar eine Domain, aber ist leider noch nicht von außen zugänglich. Weiß leider auch nicht wieso. Evtl braucht es einfach nur ein wenig Zeit für die DNS Einstellung wirksam zu werden.\r\nWerde vermutlich auch das Tagebuch auslagern.\r\n\r\nTatsächlich habe ich heute endlich mal Sonjas Mutter kennengelernt. Ziemlich Nervös davor gewesen, aber sie hat sich natürlich als sehr nette Frau herausgestellt. Sie war wohl auch ein wenig nervös laut Sonja ^^ Mal gespannt wie das dann irgendwann mit ihrem Vater wird.	7
+286	2023-11-30 14:34:52.409194+01	Heute ziehen wir den ersten Advent vor, da Fiona nicht zuhause sein wird.\r\nGab auch ein bissle Stress weil es nicht feststeht ob wir überhaupt kommen, da Sonja ihre BA heute abgibt. Aber gerade kommt sie sehr gut durch da sie mit Helena über Discord coworkt.\r\n\r\nErster Tagebucheintrag übers Handy btw. Die Seite hat mittlerweile auch einen Domainnamen „FloxSite.de“, aber leider noch mit nem :2604 dahinter da die Portweiterleitung für Port 443 nicht so recht funktioniert.	7
+287	2023-12-09 18:29:19.080646+01	Gerade auf den Weg zur Family, für den 2.Advent morgen. Bissel traurig von Sonja wegzufahren aber für eine Nacht wird’s schon klappen haha.\r\nMein Zimmer steht jetzt quasi leer und darin zu schlafen wird vermutlich später ein wenig merkwürdig.\r\nWebsite hat heute einen schönen Look bekommen, aber bin immer noch nicht so richtig zufrieden.	7
+\.
+
+
+--
+-- Data for Name: main_sonja; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.main_sonja (id, "time") FROM stdin;
+8	2023-11-23 19:08:23.005147+01
+9	2023-11-24 11:04:30.110334+01
+10	2023-11-25 12:50:52.261938+01
+11	2023-11-26 15:18:28.035605+01
+12	2023-11-27 09:27:31.436001+01
+13	2023-11-28 07:56:39.526483+01
+14	2023-11-29 10:06:38.934806+01
+15	2023-11-30 10:24:58.428433+01
+16	2023-11-30 17:42:01.84616+01
+17	2023-12-01 10:50:29.048578+01
+18	2023-12-02 11:55:19.111529+01
+19	2023-12-04 13:55:23.064772+01
+20	2023-12-05 12:33:59.372898+01
+21	2023-12-06 11:35:26.422423+01
+29	2023-12-07 14:09:30.199812+01
+30	2023-12-08 13:07:16.163943+01
+31	2023-12-09 10:52:10.470968+01
+32	2023-12-10 09:34:54.462435+01
+34	2023-12-11 13:16:05.98382+01
+35	2023-12-12 11:45:03.713862+01
+\.
+
+
+--
+-- Data for Name: uni_assignment; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.uni_assignment (id, date, points, total, done, course_id) FROM stdin;
+1	2022-05-05	30	30	t	1
+2	2022-05-13	21	28	t	1
+3	2022-05-20	24	28	t	1
+4	2022-05-27	12	14	t	1
+8	2022-04-25	14	16	t	4
+9	2022-05-02	14	16	t	4
+10	2022-05-09	9	15	t	4
+11	2022-05-16	9	12	t	4
+12	2022-05-23	11	12	t	4
+13	2022-05-30	11	12	t	4
+14	2022-06-06	4	12	t	4
+15	2022-07-04	7	24	t	4
+16	2024-02-04	4	12	t	4
+5	2022-06-03	25	25	t	1
+6	2022-06-10	32	35	t	1
+17	2022-06-17	18	20	t	1
+18	2022-06-24	25	25	t	1
+19	2022-07-01	0	16	t	1
+20	2022-07-08	11	18	t	1
+7	2023-05-10	0	0	t	2
+21	2023-07-15	0	14	t	1
+22	2023-07-20	0	0	t	1
+23	2023-11-09	0	0	t	10
+\.
+
+
+--
+-- Data for Name: uni_bookmark; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.uni_bookmark (id, link_name, link, course_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: uni_course; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.uni_course (id, name, beginning_date, end_date, semester_id) FROM stdin;
+1	Kommunikationsnetze	\N	\N	1
+2	Datenbanken	\N	\N	1
+3	Statistik	\N	\N	1
+4	Programmiersprachen	\N	\N	1
+5	Formale Sprachen	\N	\N	1
+6	Japanisch 1	\N	\N	2
+7	Software Engineering	\N	\N	2
+8	Komplexitätstheorie	\N	\N	2
+9	Datenstrukturen & effiziente Algorithmen	\N	\N	2
+10	Data Mining	\N	\N	3
+11	Experimentalphysik 2	\N	\N	3
+12	Quantuminformationen	\N	\N	3
+13	Komplexitätstheorie	\N	\N	3
+\.
+
+
+--
+-- Data for Name: uni_exam; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.uni_exam (id, date, starttime, endtime, written, passed, grade, course_id) FROM stdin;
+5	2023-10-20	09:00:00	12:00:00	t	\N	3.7	5
+8	2023-05-12	09:00:00	12:00:00	t	\N	2.7	9
+1	2023-02-28	13:00:00	15:00:00	t	\N	4	1
+2	2023-07-24	13:00:00	16:00:00	t	\N	2	2
+3	2023-07-26	09:00:00	11:00:00	t	\N	3	3
+7	2023-02-28	09:00:00	12:00:00	t	\N	2.7	7
+6	2023-02-10	17:00:00	18:30:00	t	\N	1.7	6
+9	2024-02-29	09:00:00	12:00:00	f	\N	0	13
+10	2024-02-13	14:00:00	16:00:00	f	\N	0	10
+11	2024-02-22	09:00:00	12:00:00	f	\N	0	11
+\.
+
+
+--
+-- Data for Name: uni_semester; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.uni_semester (id, name, beginning_date, end_date) FROM stdin;
+1	SoSe22	\N	\N
+2	WiSe22	\N	\N
+3	WiSe23	\N	\N
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, true);
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 60, true);
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, true);
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.auth_user_id_seq', 14, true);
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 14, true);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 15, true);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 26, true);
+
+
+--
+-- Name: journal_day_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.journal_day_id_seq', 287, true);
+
+
+--
+-- Name: main_sonja_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.main_sonja_id_seq', 35, true);
+
+
+--
+-- Name: uni_assignment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.uni_assignment_id_seq', 23, true);
+
+
+--
+-- Name: uni_bookmark_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.uni_bookmark_id_seq', 1, false);
+
+
+--
+-- Name: uni_course_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.uni_course_id_seq', 13, true);
+
+
+--
+-- Name: uni_exam_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.uni_exam_id_seq', 11, true);
+
+
+--
+-- Name: uni_semester_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.uni_semester_id_seq', 3, true);
+
+
+--
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_group_id_94350c0c_uniq; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_group_id_94350c0c_uniq UNIQUE (user_id, group_id);
+
+
+--
+-- Name: auth_user auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_permission_id_14a6b632_uniq; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_permission_id_14a6b632_uniq UNIQUE (user_id, permission_id);
+
+
+--
+-- Name: auth_user auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_username_key UNIQUE (username);
+
+
+--
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: journal_day journal_day_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.journal_day
+    ADD CONSTRAINT journal_day_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: main_sonja main_sonja_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.main_sonja
+    ADD CONSTRAINT main_sonja_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: uni_assignment uni_assignment_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.uni_assignment
+    ADD CONSTRAINT uni_assignment_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: uni_bookmark uni_bookmark_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.uni_bookmark
+    ADD CONSTRAINT uni_bookmark_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: uni_course uni_course_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.uni_course
+    ADD CONSTRAINT uni_course_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: uni_exam uni_exam_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.uni_exam
+    ADD CONSTRAINT uni_exam_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: uni_semester uni_semester_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.uni_semester
+    ADD CONSTRAINT uni_semester_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: auth_user_groups_group_id_97559544; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX auth_user_groups_group_id_97559544 ON public.auth_user_groups USING btree (group_id);
+
+
+--
+-- Name: auth_user_groups_user_id_6a12ed8b; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX auth_user_groups_user_id_6a12ed8b ON public.auth_user_groups USING btree (user_id);
+
+
+--
+-- Name: auth_user_user_permissions_permission_id_1fbb5f2c; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX auth_user_user_permissions_permission_id_1fbb5f2c ON public.auth_user_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_user_user_permissions_user_id_a95ead1b; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX auth_user_user_permissions_user_id_a95ead1b ON public.auth_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: auth_user_username_6821ab7c_like; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX auth_user_username_6821ab7c_like ON public.auth_user USING btree (username varchar_pattern_ops);
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: uni_assignment_course_id_14bcb4be; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX uni_assignment_course_id_14bcb4be ON public.uni_assignment USING btree (course_id);
+
+
+--
+-- Name: uni_bookmark_course_id_8853b051; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX uni_bookmark_course_id_8853b051 ON public.uni_bookmark USING btree (course_id);
+
+
+--
+-- Name: uni_course_semester_id_b61bcca9; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX uni_course_semester_id_b61bcca9 ON public.uni_course USING btree (semester_id);
+
+
+--
+-- Name: uni_exam_course_id_6c5cd06f; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX uni_exam_course_id_6c5cd06f ON public.uni_exam USING btree (course_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_group_id_97559544_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_group_id_97559544_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_6a12ed8b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_6a12ed8b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: uni_assignment uni_assignment_course_id_14bcb4be_fk_uni_course_id; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.uni_assignment
+    ADD CONSTRAINT uni_assignment_course_id_14bcb4be_fk_uni_course_id FOREIGN KEY (course_id) REFERENCES public.uni_course(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: uni_bookmark uni_bookmark_course_id_8853b051_fk_uni_course_id; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.uni_bookmark
+    ADD CONSTRAINT uni_bookmark_course_id_8853b051_fk_uni_course_id FOREIGN KEY (course_id) REFERENCES public.uni_course(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: uni_course uni_course_semester_id_b61bcca9_fk_uni_semester_id; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.uni_course
+    ADD CONSTRAINT uni_course_semester_id_b61bcca9_fk_uni_semester_id FOREIGN KEY (semester_id) REFERENCES public.uni_semester(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: uni_exam uni_exam_course_id_6c5cd06f_fk_uni_course_id; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.uni_exam
+    ADD CONSTRAINT uni_exam_course_id_6c5cd06f_fk_uni_course_id FOREIGN KEY (course_id) REFERENCES public.uni_course(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

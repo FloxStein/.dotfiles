@@ -1,0 +1,16 @@
+[Unit]
+Description=Schaut nach den neuen Blaettern
+# Allow manual starts
+RefuseManualStart=no  
+# Allow manual stops
+RefuseManualStop=no   
+
+[Timer]
+#Execute job if it missed a run due to machine being off
+Persistent=true
+OnCalendar=*-*-* *:00:00
+#File describing job to execute
+Unit=lms.service
+
+[Install]
+WantedBy=timers.target

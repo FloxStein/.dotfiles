@@ -1,0 +1,11 @@
+[Unit]
+Description=Schaut ob Spiel im Angebot ist
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python /home/pi/Telegram/sales.py
+User=pi
+
+[Install]
+WantedBy=multi-user.target

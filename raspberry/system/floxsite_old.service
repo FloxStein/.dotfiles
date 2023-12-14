@@ -1,0 +1,11 @@
+[Unit]
+Description=Meine Homepage
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/home/pi/FloxSite/floxsite_venv/bin/python /home/pi/FloxSite/manage.py runserver 192.168.0.115:8000
+User=pi
+
+[Install]
+WantedBy=multi-user.target

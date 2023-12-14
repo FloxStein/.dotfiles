@@ -1,0 +1,16 @@
+[Unit]
+Description=Schaut nach dem Angebot jeden Tag 
+# Allow manual starts
+RefuseManualStart=no  
+# Allow manual stops
+RefuseManualStop=no   
+
+[Timer]
+#Execute job if it missed a run due to machine being off
+Persistent=true
+OnCalendar=*-*-* 08:00:00
+#File describing job to execute
+Unit=sales.service
+
+[Install]
+WantedBy=timers.target

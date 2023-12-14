@@ -1,0 +1,11 @@
+[Unit]
+Description=Meine Homepage
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/home/pi/FloxSite/floxsite_venv/bin/gunicorn -c /home/pi/FloxSite/conf/gunicorn_config.py floxsite.wsgi
+User=pi
+
+[Install]
+WantedBy=multi-user.target

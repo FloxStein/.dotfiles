@@ -1,0 +1,11 @@
+[Unit]
+Description=Schaut ob Blaetter online sind
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python /home/pi/Telegram/lms.py
+User=pi
+
+[Install]
+WantedBy=multi-user.target

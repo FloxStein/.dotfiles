@@ -1,0 +1,26 @@
+server {
+    listen 443 ssl;
+    server_name floxsite.de www.floxsite.de 134.93.64.85;
+
+    ssl_certificate /etc/nginx/ssl/floxsite.de_ssl_certificate.cer;
+    ssl_certificate_key /etc/nginx/ssl/floxsite.de_private_key.key;
+
+    location /static/ {
+        alias /home/pi/FloxSite/static_root/;
+    }
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+	proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # CORS-Konfiguration hinzufügen (korrigierte Version)
+        add_header 'Access-Control-Allow-Origin' 'http://floxsite.de http://www.floxsite.de http://floxsite.de:2604';
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range';
+        add_header 'Access-Control-Allow-Credentials' 'true';
+    }
+}
+
