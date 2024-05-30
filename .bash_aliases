@@ -73,3 +73,73 @@ run" >> .gitignore
 openeis() {
 	xdg-open https://luna.informatik.uni-mainz.de/eis20/
 }
+
+function projects() {
+    local projects_dir="/home/flo/testmk"
+    local selected_dir
+    selected_dir=$(
+        find "$projects_dir"/* -maxdepth 1 -type d -printf "%f\n" | fzf-tmux -p 50%,50% \
+            --prompt 'Projects > '
+    )
+    if [ -n "$selected_dir" ]; then
+        cd "$projects_dir/$selected_dir" || return 1
+    fi
+}
+
+function test() {
+    RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+    INITIAL_QUERY="${*:-}"
+    : | fzf-tmux -p 90%,90% --disabled --query "$INITIAL_QUERY" \
+        --bind "start:reload:$RG_PREFIX {q}" \
+        --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
+        --ansi \
+        --color "hl:-1:underline,hl+:-1:underline:reverse" \
+        --prompt 'All> ' \
+        --delimiter : \
+        --header 'CTRL-D: Directories / CTRL-F: Files' \
+        --preview 'bat --color=always {1} --highlight-line {2} --style=numbers --line-range=:500' \
+        --preview-window 'right,60%,+{2}+3/3,~3' \
+        --pointer '▶' \
+        --marker '⇒' \
+        --bind 'enter:execute(code {1} -g {2})'
+}
+
+function fzf() {
+    local selected_file
+    selected_file=$(find * | fzf-tmux -p 90%,90% \
+        --prompt 'All> ' \
+        --header 'CTRL-D: Directories / CTRL-F: Files' \
+        --preview 'bat --color=always --style=numbers --line-range=:500 {}' \
+        --preview-window 'right,60%' \
+        --bind 'ctrl-d:change-prompt(Directories> )+reload(find * -type d)+toggle-preview' \
+        --bind 'ctrl-f:change-prompt(Files> )+reload(find * -type f)+toggle-preview' \
+        --pointer '▶' \
+        --marker '⇒')
+
+    if [ -n "$selected_file" ]; then
+        code "$selected_file"
+    fi
+}
+
+function kill() {
+    (
+        date
+        ps -ef
+    ) |
+        fzf-tmux -p 90%,90% --bind="ctrl-r:reload(date; ps -ef)" \
+            --header=$'Press CTRL-R to reload\n\n' --header-lines=2 \
+            --preview="echo {}" --preview-window=down,3,wrap \
+            --layout=reverse --height=80% | awk '{print $2}' | xargs kill -9
+}
+
+function be() {
+    RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+    INITIAL_QUERY="${*:-}"
+    : | fzf --ansi --disabled --query "$INITIAL_QUERY" \
+        --bind "start:reload:$RG_PREFIX {q}" \
+        --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
+        --delimiter : \
+        --preview 'bat --color=always {1} --highlight-line {2}' \
+        --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
+        --bind 'enter:become(vim {1} +{2})'
+}
